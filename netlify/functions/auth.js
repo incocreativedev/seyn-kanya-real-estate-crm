@@ -23,13 +23,19 @@ exports.handler = async (event) => {
         const requestBody = JSON.parse(body);
         
         // Determine action based on request body content
-        if (requestBody.fullName) {
+        if (requestBody.action === 'forgot-password') {
+          // Forgot password request
+          return await requestPasswordReset(requestBody);
+        } else if (requestBody.action === 'reset-password') {
+          // Reset password request
+          return await resetPassword(requestBody);
+        } else if (requestBody.fullName) {
           // Registration request
           return await registerUser(requestBody);
-        } else if (requestBody.token && !requestBody.email) {
+        } else if (requestBody.token && !requestBody.email && !requestBody.newPassword) {
           // Token verification request
           return await verifyToken(requestBody);
-        } else if (requestBody.email && requestBody.password) {
+        } else if (requestBody.email && requestBody.password && !requestBody.action) {
           // Login request
           return await loginUser(requestBody);
         } else {
@@ -72,6 +78,18 @@ async function initializeUserTable() {
       user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
       token_hash VARCHAR(255) NOT NULL,
       expires_at TIMESTAMP NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
+  // Create password reset tokens table
+  await query(`
+    CREATE TABLE IF NOT EXISTS password_reset_tokens (
+      id SERIAL PRIMARY KEY,
+      user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(255) UNIQUE NOT NULL,
+      expires_at TIMESTAMP NOT NULL,
+      used BOOLEAN DEFAULT FALSE,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
@@ -304,4 +322,100 @@ async function getUserProfile(headers) {
   }
 
   return createResponse(200, JSON.parse(verifyResult.body));
+}
+
+// Request password reset
+async function requestPasswordReset({ email }) {
+  if (!email) {
+    return createResponse(400, { error: 'Email is required' });
+  }
+
+  try {
+    // Check if user exists
+    const userResult = await query('SELECT id, email, full_name FROM users WHERE email = $1', [email]);
+    
+    if (userResult.rows.length === 0) {
+      // Don't reveal if email exists or not for security
+      return createResponse(200, { message: 'If the email exists, a reset link has been sent' });
+    }
+
+    const user = userResult.rows[0];
+    
+    // Generate reset token (6 characters for demo purposes)
+    const resetToken = crypto.randomBytes(3).toString('hex').toUpperCase();
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+
+    // Invalidate any existing tokens for this user
+    await query('UPDATE password_reset_tokens SET used = TRUE WHERE user_id = $1 AND used = FALSE', [user.id]);
+
+    // Store the reset token
+    await query(
+      'INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES ($1, $2, $3)',
+      [user.id, resetToken, expiresAt]
+    );
+
+    // In a real application, you would send an email here
+    // For development, we'll return the token directly
+    console.log(`Password reset requested for ${email}. Token: ${resetToken}`);
+
+    return createResponse(200, { 
+      message: 'Reset link sent successfully',
+      resetToken: resetToken, // Remove this in production
+      // In production, only return: { message: 'If the email exists, a reset link has been sent' }
+    });
+
+  } catch (error) {
+    console.error('Password reset request error:', error);
+    return createResponse(500, { error: 'Failed to process password reset request' });
+  }
+}
+
+// Reset password with token
+async function resetPassword({ token, newPassword }) {
+  if (!token || !newPassword) {
+    return createResponse(400, { error: 'Token and new password are required' });
+  }
+
+  if (newPassword.length < 6) {
+    return createResponse(400, { error: 'Password must be at least 6 characters long' });
+  }
+
+  try {
+    // Find valid reset token
+    const tokenResult = await query(`
+      SELECT prt.id, prt.user_id, u.email 
+      FROM password_reset_tokens prt
+      JOIN users u ON prt.user_id = u.id
+      WHERE prt.token = $1 
+        AND prt.expires_at > NOW() 
+        AND prt.used = FALSE
+    `, [token]);
+
+    if (tokenResult.rows.length === 0) {
+      return createResponse(400, { error: 'Invalid or expired reset token' });
+    }
+
+    const resetRecord = tokenResult.rows[0];
+
+    // Hash the new password
+    const hashedPassword = hashPassword(newPassword);
+
+    // Update user password
+    await query('UPDATE users SET password_hash = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2', 
+      [hashedPassword, resetRecord.user_id]);
+
+    // Mark token as used
+    await query('UPDATE password_reset_tokens SET used = TRUE WHERE id = $1', [resetRecord.id]);
+
+    // Invalidate all existing sessions for security
+    await query('DELETE FROM user_sessions WHERE user_id = $1', [resetRecord.user_id]);
+
+    console.log(`Password reset successful for user ID: ${resetRecord.user_id}`);
+
+    return createResponse(200, { message: 'Password reset successful' });
+
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return createResponse(500, { error: 'Failed to reset password' });
+  }
 }

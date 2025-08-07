@@ -312,8 +312,52 @@
                     Create Account
                 </button>
             </form>
+
+            <!-- Forgot Password Form -->
+            <form id="forgotPasswordForm" style="display: none;">
+                <div class="form-group">
+                    <label for="forgotEmail">Email Address</label>
+                    <input type="email" id="forgotEmail" name="email" required autocomplete="email" placeholder="Enter your email address">
+                </div>
+                
+                <button type="submit" class="auth-button" id="forgotPasswordButton">
+                    Send Reset Link
+                </button>
+                
+                <div class="auth-switch" style="margin-top: 20px;">
+                    <span>Remember your password?</span>
+                    <a href="#" onclick="showLogin()">Back to Sign In</a>
+                </div>
+            </form>
+
+            <!-- Reset Password Form -->
+            <form id="resetPasswordForm" style="display: none;">
+                <div class="form-group">
+                    <label for="resetToken">Reset Token</label>
+                    <input type="text" id="resetToken" name="token" required placeholder="Enter the reset token from your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required autocomplete="new-password" minlength="6">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" required autocomplete="new-password" minlength="6">
+                </div>
+                
+                <button type="submit" class="auth-button" id="resetPasswordButton">
+                    Reset Password
+                </button>
+                
+                <div class="auth-switch" style="margin-top: 20px;">
+                    <span>Don't have a token?</span>
+                    <a href="#" onclick="showForgotPassword()">Request Reset Link</a>
+                </div>
+            </form>
             
-            <div class="auth-switch">
+            <div class="auth-switch" id="mainAuthSwitch">
                 <span id="switchText">Don't have an account?</span>
                 <a href="#" id="switchLink" onclick="toggleForm()">Sign up</a>
             </div>
@@ -330,8 +374,23 @@
 
         // Check if user is already logged in
         document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
             const token = localStorage.getItem('authToken');
-            if (token) {
+            
+            if (action === 'change-password') {
+                // User wants to change password while logged in
+                const savedEmail = sessionStorage.getItem('changePasswordEmail');
+                if (savedEmail) {
+                    // Pre-fill email and show forgot password form
+                    document.getElementById('forgotEmail').value = savedEmail;
+                    showForgotPassword();
+                    // Clear the stored email
+                    sessionStorage.removeItem('changePasswordEmail');
+                } else {
+                    showForgotPassword();
+                }
+            } else if (token) {
                 verifyTokenAndRedirect(token);
             }
         });
@@ -515,9 +574,170 @@
             document.getElementById('successMessage').style.display = 'none';
         }
 
-        // Forgot password (placeholder)
+        // Form state management
+        let currentForm = 'login'; // 'login', 'register', 'forgot', 'reset'
+
+        // Show forgot password form
         function showForgotPassword() {
-            alert('Password reset functionality will be implemented soon. Please contact support for assistance.');
+            currentForm = 'forgot';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'block';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            document.getElementById('mainAuthSwitch').style.display = 'none';
+            
+            document.getElementById('authTitle').textContent = 'Reset Password';
+            document.getElementById('authSubtitle').textContent = 'Enter your email to receive a reset link';
+            clearMessages();
+        }
+
+        // Show reset password form
+        function showResetPassword() {
+            currentForm = 'reset';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'block';
+            document.getElementById('mainAuthSwitch').style.display = 'none';
+            
+            document.getElementById('authTitle').textContent = 'Set New Password';
+            document.getElementById('authSubtitle').textContent = 'Enter your reset token and new password';
+            clearMessages();
+        }
+
+        // Show login form
+        function showLogin() {
+            currentForm = 'login';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('resetPasswordForm').style.display = 'none';
+            document.getElementById('mainAuthSwitch').style.display = 'block';
+            
+            document.getElementById('authTitle').textContent = 'Welcome Back';
+            document.getElementById('authSubtitle').textContent = 'Sign in to your Real Estate CRM';
+            document.getElementById('switchText').textContent = "Don't have an account?";
+            document.getElementById('switchLink').textContent = 'Sign up';
+            clearMessages();
+        }
+
+        // Handle forgot password form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const forgotButton = document.getElementById('forgotPasswordButton');
+            const email = document.getElementById('forgotEmail').value;
+            
+            forgotButton.disabled = true;
+            forgotButton.innerHTML = '<span class="loading-spinner"></span>Sending Reset Link...';
+            clearMessages();
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        action: 'forgot-password',
+                        email: email 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showSuccess(`Reset link sent! For development purposes, your reset token is: ${data.resetToken}`);
+                    
+                    // Auto-fill the reset token and switch to reset form after 3 seconds
+                    setTimeout(() => {
+                        document.getElementById('resetToken').value = data.resetToken;
+                        showResetPassword();
+                    }, 3000);
+                } else {
+                    showError(data.error || 'Failed to send reset link');
+                }
+            } catch (error) {
+                console.error('Forgot password error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                forgotButton.disabled = false;
+                forgotButton.innerHTML = 'Send Reset Link';
+            }
+        });
+
+        // Handle reset password form submission
+        document.getElementById('resetPasswordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resetButton = document.getElementById('resetPasswordButton');
+            const token = document.getElementById('resetToken').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            
+            // Validate passwords match
+            if (newPassword !== confirmNewPassword) {
+                showError('Passwords do not match');
+                return;
+            }
+            
+            resetButton.disabled = true;
+            resetButton.innerHTML = '<span class="loading-spinner"></span>Resetting Password...';
+            clearMessages();
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        action: 'reset-password',
+                        token: token,
+                        newPassword: newPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showSuccess('Password reset successful! You can now sign in with your new password.');
+                    
+                    // Clear form and switch to login after 2 seconds
+                    setTimeout(() => {
+                        document.getElementById('resetPasswordForm').reset();
+                        showLogin();
+                    }, 2000);
+                } else {
+                    showError(data.error || 'Failed to reset password');
+                }
+            } catch (error) {
+                console.error('Reset password error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                resetButton.disabled = false;
+                resetButton.innerHTML = 'Reset Password';
+            }
+        });
+
+        // Update the toggleForm function to work with new form states
+        function toggleForm() {
+            if (currentForm === 'login') {
+                currentForm = 'register';
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+                document.getElementById('forgotPasswordForm').style.display = 'none';
+                document.getElementById('resetPasswordForm').style.display = 'none';
+                document.getElementById('mainAuthSwitch').style.display = 'block';
+                
+                document.getElementById('authTitle').textContent = 'Create Account';
+                document.getElementById('authSubtitle').textContent = 'Join the Real Estate CRM';
+                document.getElementById('switchText').textContent = 'Already have an account?';
+                document.getElementById('switchLink').textContent = 'Sign in';
+            } else {
+                showLogin();
+            }
+            clearMessages();
         }
     </script>
 </body>
