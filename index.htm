@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seyn & Kanya Real Estate CRM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .team-profiles {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .profile {
+            text-align: center;
+        }
+        
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .tab-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 25px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .filter-group label {
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .filter-group input, .filter-group select {
+            padding: 8px 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .filter-group input:focus, .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f3f4;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .clickable-name {
+            color: #667eea;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: underline;
+        }
+        
+        .clickable-name:hover {
+            color: #764ba2;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .property-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .client-detail-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .client-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .detail-item strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .property-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-buyer {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-seller {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-tenant {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .reminder-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .birthday-badge {
+            background: #ff9f43;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .chat-container {
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+        
+        .url-input-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .price-range input {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .client-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">TYSON<br>HELDERBERG</div>
+            <h1 style="color: #333; font-size: 24px;">Real Estate CRM</h1>
+        </div>
+        <div class="team-profiles">
+            <div class="profile">
+                <div class="profile-pic">SI</div>
+                <div class="profile-name">Seyn Ismail</div>
+            </div>
+            <div class="profile">
+                <div class="profile-pic">KQ</div>
+                <div class="profile-name">Kanya Qalinge</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tab-container">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('contacts')">👥 All Clients</button>
+                <button class="tab" onclick="showTab('leads')">🎯 Potential Leads</button>
+                <button class="tab" onclick="showTab('properties')">🏠 Properties</button>
+                <button class="tab" onclick="showTab('reminders')">⏰ Reminders</button>
+                <button class="tab" onclick="showTab('comments')">📝 Comments</button>
+                <button class="tab" onclick="showTab('import')">📥 Import Listings</button>
+                <button class="tab" onclick="showTab('chat')">🤖 AI Assistant</button>
+            </div>
+
+            <!-- All Clients Tab -->
+            <div id="contacts" class="tab-content active">
+                <h2>Client Management</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showModal('addClientModal')">➕ Add New Client</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Search Name:</label>
+                        <input type="text" id="nameFilter" placeholder="Enter name..." onkeyup="filterClients()">
+                    </div>
+                    <div class="filter-group">
+                        <label>Client Type:</label>
+                        <select id="typeFilter" onchange="filterClients()">
+                            <option value="">All Types</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="tenant">Tenant</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Budget Range (ZAR):</label>
+                        <div class="price-range">
+                            <input type="number" id="minPrice" placeholder="R 5,000" min="5000" max="25000000" onchange="filterClients()">
+                            <span>to</span>
+                            <input type="number" id="maxPrice" placeholder="R 25,000,000" min="5000" max="25000000" onchange="filterClients()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Client Details Display -->
+                <div id="clientDetailsDisplay" style="display: none;">
+                    <!-- Client details will be displayed here -->
+                </div>
+
+                <table class="data-table" id="clientsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Budget Range</th>
+                            <th>Birthday</th>
+                            <th>Next Reminder</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Potential Leads Tab -->
+            <div id="leads" class="tab-content">
+                <h2>Potential Leads</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showModal('addLeadModal')">➕ Add New Lead</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Search Lead:</label>
+                        <input type="text" id="leadNameFilter" placeholder="Enter name..." onkeyup="filterLeads()">
+                    </div>
+                    <div class="filter-group">
+                        <label>Follow-up Date:</label>
+                        <input type="date" id="leadDateFilter" onchange="filterLeads()">
+                    </div>
+                </div>
+
+                <table class="data-table" id="leadsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Interest</th>
+                            <th>Follow-up Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Properties Tab -->
+            <div id="properties" class="tab-content">
+                <h2>Property Listings</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showModal('addPropertyModal')">➕ Add New Property</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="statusFilter" onchange="filterProperties()">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="pending">Pending</option>
+                            <option value="sold">Sold/Rented</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Type:</label>
+                        <select id="propertyTypeFilter" onchange="filterProperties()">
+                            <option value="">All Types</option>
+                            <option value="sale">For Sale</option>
+                            <option value="rent">For Rent</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Price Range (ZAR):</label>
+                        <div class="price-range">
+                            <input type="number" id="propMinPrice" placeholder="R 5,000" min="5000" max="25000000" onchange="filterProperties()">
+                            <span>to</span>
+                            <input type="number" id="propMaxPrice" placeholder="R 25,000,000" min="5000" max="25000000" onchange="filterProperties()">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="propertiesList">
+                    <!-- Properties will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Reminders Tab -->
+            <div id="reminders" class="tab-content">
+                <h2>Reminders & Follow-ups</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showModal('addReminderModal')">➕ Add New Reminder</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Filter by Date:</label>
+                        <input type="date" id="reminderDateFilter" onchange="filterReminders()">
+                    </div>
+                    <div class="filter-group">
+                        <label>Reminder Type:</label>
+                        <select id="reminderTypeFilter" onchange="filterReminders()">
+                            <option value="">All Types</option>
+                            <option value="call">Call Client</option>
+                            <option value="birthday">Birthday</option>
+                            <option value="follow-up">Follow-up</option>
+                            <option value="meeting">Meeting</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="remindersList">
+                    <!-- Reminders will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Comments Tab -->
+            <div id="comments" class="tab-content">
+                <h2>Notes & Comments</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="showModal('addCommentModal')">➕ Add New Note</button>
+                </div>
+
+                <div class="filters">
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select id="commentCategoryFilter" onchange="filterComments()">
+                            <option value="">All Categories</option>
+                            <option value="client">Client Notes</option>
+                            <option value="property">Property Notes</option>
+                            <option value="meeting">Meeting Notes</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="commentsList">
+                    <!-- Comments will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Import Listings Tab -->
+            <div id="import" class="tab-content">
+                <h2>Import Property Listings</h2>
+                
+                <div class="url-input-section">
+                    <h3>Import from Property24 or Other Websites</h3>
+                    <p>Paste the URL of a property listing to automatically import all details:</p>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <input type="url" id="listingUrl" placeholder="https://property24.com/listing..." style="flex: 1; padding: 10px; border: 2px solid #e9ecef; border-radius: 8px;">
+                        <button class="btn btn-primary" onclick="importListing()">📥 Import Listing</button>
+                    </div>
+                </div>
+
+                <div id="importResult" style="display: none;">
+                    <h3>Imported Property Details</h3>
+                    <div class="property-card">
+                        <div id="importedDetails">
+                            <!-- Imported details will appear here -->
+                        </div>
+                        <button class="btn btn-success" onclick="saveImportedProperty()">💾 Save Property</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="chat" class="tab-content">
+                <h2>AI Assistant for Messages & Emails</h2>
+                <p>Use this AI assistant to help craft professional messages and emails for your clients.</p>
+                
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div style="padding: 10px; background: #e3f2fd; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>AI Assistant:</strong> Hi! I'm here to help you create professional messages and emails for your real estate business. What would you like help with today?
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Ask me to help with messages, emails, or any real estate communication..." onkeypress="handleChatKeyPress(event)">
+                        <button class="btn btn-primary" onclick="sendChatMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Client Modal -->
+    <div id="addClientModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addClientModal')">&times;</span>
+            <h2>Add New Client</h2>
+            <form onsubmit="addClient(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number:</label>
+                        <input type="tel" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Client Type:</label>
+                        <select name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="tenant">Tenant</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Birthday:</label>
+                        <input type="date" name="birthday">
+                    </div>
+                    <div class="form-group">
+                        <label>Next Reminder Date:</label>
+                        <input type="date" name="reminderDate">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Budget Min (ZAR):</label>
+                        <input type="number" name="budgetMin" min="5000" max="25000000" placeholder="5000">
+                    </div>
+                    <div class="form-group">
+                        <label>Budget Max (ZAR):</label>
+                        <input type="number" name="budgetMax" min="5000" max="25000000" placeholder="25000000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Additional Notes:</label>
+                    <textarea name="notes" rows="3" placeholder="Any additional information about the client..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Client</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Lead Modal -->
+    <div id="addLeadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addLeadModal')">&times;</span>
+            <h2>Add New Lead</h2>
+            <form onsubmit="addLead(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="leadName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number:</label>
+                        <input type="tel" name="leadPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email (Optional):</label>
+                        <input type="email" name="leadEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Interest:</label>
+                        <select name="leadInterest" required>
+                            <option value="">Select Interest</option>
+                            <option value="buying">Looking to Buy</option>
+                            <option value="selling">Looking to Sell</option>
+                            <option value="renting">Looking to Rent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Follow-up Date:</label>
+                        <input type="date" name="followUpDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select name="leadStatus" required>
+                            <option value="new">New Lead</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="qualified">Qualified</option>
+                            <option value="converted">Converted</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes:</label>
+                    <textarea name="leadNotes" rows="3" placeholder="Lead source, preferences, etc..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Lead</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Property Modal -->
+    <div id="addPropertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addPropertyModal')">&times;</span>
+            <h2>Add New Property</h2>
+            <form onsubmit="addProperty(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Property Title:</label>
+                        <input type="text" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (ZAR):</label>
+                        <input type="number" name="price" min="5000" max="25000000" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select name="propertyType" required>
+                            <option value="">Select Type</option>
+                            <option value="sale">For Sale</option>
+                            <option value="rent">For Rent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="pending">Pending</option>
+                            <option value="sold">Sold/Rented</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Bedrooms:</label>
+                        <input type="number" name="bedrooms" min="0" max="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Bathrooms:</label>
+                        <input type="number" name="bathrooms" min="0" max="20" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Size (sqm):</label>
+                        <input type="number" name="size" min="1" max="10000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Location:</label>
+                    <input type="text" name="location" placeholder="Area, City, Province" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="description" rows="4" placeholder="Property description, features, etc..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Property</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Reminder Modal -->
+    <div id="addReminderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addReminderModal')">&times;</span>
+            <h2>Add New Reminder</h2>
+            <form onsubmit="addReminder(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <input type="text" name="reminderTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" name="reminderDate" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Time:</label>
+                        <input type="time" name="reminderTime">
+                    </div>
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select name="reminderType" required>
+                            <option value="">Select Type</option>
+                            <option value="call">Call Client</option>
+                            <option value="birthday">Birthday</option>
+                            <option value="follow-up">Follow-up</option>
+                            <option value="meeting">Meeting</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Related Client (Optional):</label>
+                    <select name="relatedClient">
+                        <option value="">Select Client</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes:</label>
+                    <textarea name="reminderNotes" rows="3" placeholder="Additional details about this reminder..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Reminder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Comment Modal -->
+    <div id="addCommentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addCommentModal')">&times;</span>
+            <h2>Add New Note</h2>
+            <form onsubmit="addComment(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Title:</label>
+                        <input type="text" name="commentTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select name="commentCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="client">Client Notes</option>
+                            <option value="property">Property Notes</option>
+                            <option value="meeting">Meeting Notes</option>
+                            <option value="followup">Follow-up</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Related To (Optional):</label>
+                    <input type="text" name="relatedTo" placeholder="Client name, property address, etc.">
+                </div>
+                <div class="form-group">
+                    <label>Content:</label>
+                    <textarea name="commentContent" rows="5" placeholder="Write your note here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let clients = [];
+        let leads = [];
+        let properties = [];
+        let reminders = [];
+        let comments = [];
+
+        // Initialize with sample data
+        function initializeData() {
+            clients = [
+                {
+                    id: 1,
+                    name: "John Smith",
+                    phone: "+27 82 123 4567",
+                    email: "john.smith@email.com",
+                    type: "buyer",
+                    birthday: "1985-03-15",
+                    budgetMin: 1500000,
+                    budgetMax: 2500000,
+                    reminderDate: "2025-08-15",
+                    notes: "Looking for family home in Somerset West"
+                },
+                {
+                    id: 2,
+                    name: "Sarah Johnson",
+                    phone: "+27 83 987 6543",
+                    email: "sarah.johnson@email.com",
+                    type: "seller",
+                    birthday: "1978-11-22",
+                    budgetMin: 0,
+                    budgetMax: 0,
+                    reminderDate: "2025-08-10",
+                    notes: "Selling 3-bedroom house in Stellenbosch"
+                }
+            ];
+
+            leads = [
+                {
+                    id: 1,
+                    name: "Mike Wilson",
+                    phone: "+27 84 555 1234",
+                    email: "mike.wilson@email.com",
+                    interest: "buying",
+                    followUpDate: "2025-08-12",
+                    status: "contacted",
+                    notes: "Interested in apartments under R1.5M"
+                }
+            ];
+
+            properties = [
+                {
+                    id: 1,
+                    title: "Beautiful 3BR Family Home",
+                    price: 2200000,
+                    type: "sale",
+                    status: "active",
+                    bedrooms: 3,
+                    bathrooms: 2,
+                    size: 250,
+                    location: "Somerset West, Western Cape",
+                    description: "Stunning family home with garden and mountain views"
+                }
+            ];
+
+            reminders = [
+                {
+                    id: 1,
+                    title: "Call John Smith - Follow up",
+                    date: "2025-08-08",
+                    time: "14:00",
+                    type: "call",
+                    relatedClient: "John Smith",
+                    notes: "Discuss new listings in budget range"
+                }
+            ];
+
+            comments = [
+                {
+                    id: 1,
+                    title: "Initial consultation with John Smith",
+                    category: "client",
+                    relatedTo: "John Smith",
+                    content: "Client is pre-approved for R2.5M bond. Looking for move-in ready properties.",
+                    date: new Date().toISOString().split('T')[0]
+                }
+            ];
+
+            // Render initial data
+            renderClients();
+            renderLeads();
+            renderProperties();
+            renderReminders();
+            renderComments();
+            populateClientOptions();
+        }
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Hide all tab buttons
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(button => button.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activate tab button
+            event.target.classList.add('active');
+        }
+
+        // Modal functionality
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            if (!amount) return 'Not specified';
+            return new Intl.NumberFormat('en-ZA', {
+                style: 'currency',
+                currency: 'ZAR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return 'Not set';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-ZA');
+        }
+
+        // Client functions
+        function addClient(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const client = {
+                id: Date.now(),
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                type: formData.get('type'),
+                birthday: formData.get('birthday'),
+                budgetMin: parseInt(formData.get('budgetMin')) || 0,
+                budgetMax: parseInt(formData.get('budgetMax')) || 0,
+                reminderDate: formData.get('reminderDate'),
+                notes: formData.get('notes')
+            };
+            
+            clients.push(client);
+            renderClients();
+            populateClientOptions();
+            closeModal('addClientModal');
+            event.target.reset();
+        }
+
+        function renderClients() {
+            const tbody = document.querySelector('#clientsTable tbody');
+            tbody.innerHTML = '';
+            
+            const filteredClients = getFilteredClients();
+            
+            filteredClients.forEach(client => {
+                const row = document.createElement('tr');
+                
+                // Calculate days until birthday
+                let birthdayInfo = '';
+                if (client.birthday) {
+                    const today = new Date();
+                    const birthday = new Date(client.birthday);
+                    birthday.setFullYear(today.getFullYear());
+                    
+                    if (birthday < today) {
+                        birthday.setFullYear(today.getFullYear() + 1);
+                    }
+                    
+                    const diffTime = birthday - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    
+                    if (diffDays <= 7) {
+                        birthdayInfo = `<span class="birthday-badge">Birthday in ${diffDays} days!</span>`;
+                    }
+                }
+
+                row.innerHTML = `
+                    <td>
+                        <span class="clickable-name" onclick="showClientDetails(${client.id})">${client.name}</span>
+                    </td>
+                    <td><span class="property-status status-${client.type}">${client.type}</span></td>
+                    <td>${formatCurrency(client.budgetMin)} - ${formatCurrency(client.budgetMax)}</td>
+                    <td>${formatDate(client.birthday)} ${birthdayInfo}</td>
+                    <td>
+                        ${client.reminderDate ? formatDate(client.reminderDate) : 'No reminder set'}
+                        ${client.reminderDate && new Date(client.reminderDate) <= new Date() ? '<span class="reminder-badge">Due!</span>' : ''}
+                    </td>
+                    <td class="contact-actions">
+                        <button class="btn btn-info btn-small" onclick="callClient('${client.phone}')">📞 Call</button>
+                        <button class="btn btn-success btn-small" onclick="emailClient('${client.email}')">📧 Email</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteClient(${client.id})">🗑️</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getFilteredClients() {
+            let filtered = [...clients];
+            
+            const nameFilter = document.getElementById('nameFilter')?.value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter')?.value;
+            const minPrice = parseInt(document.getElementById('minPrice')?.value) || 0;
+            const maxPrice = parseInt(document.getElementById('maxPrice')?.value) || Infinity;
+            
+            if (nameFilter) {
+                filtered = filtered.filter(client => 
+                    client.name.toLowerCase().includes(nameFilter)
+                );
+            }
+            
+            if (typeFilter) {
+                filtered = filtered.filter(client => client.type === typeFilter);
+            }
+            
+            if (minPrice > 0 || maxPrice < Infinity) {
+                filtered = filtered.filter(client => {
+                    const clientMin = client.budgetMin || 0;
+                    const clientMax = client.budgetMax || Infinity;
+                    return (clientMax >= minPrice && clientMin <= maxPrice);
+                });
+            }
+            
+            return filtered;
+        }
+
+        function filterClients() {
+            renderClients();
+        }
+
+        function showClientDetails(clientId) {
+            const client = clients.find(c => c.id === clientId);
+            if (!client) return;
+            
+            const detailsDiv = document.getElementById('clientDetailsDisplay');
+            detailsDiv.innerHTML = `
+                <div class="client-detail-card">
+                    <h3>${client.name}</h3>
+                    <div class="client-detail-grid">
+                        <div class="detail-item">
+                            <strong>Contact Details</strong>
+                            <div>📞 ${client.phone}</div>
+                            <div>📧 ${client.email}</div>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Client Type</strong>
+                            <div>${client.type.charAt(0).toUpperCase() + client.type.slice(1)}</div>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Budget Range</strong>
+                            <div>${formatCurrency(client.budgetMin)} - ${formatCurrency(client.budgetMax)}</div>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Birthday</strong>
+                            <div>${formatDate(client.birthday)}</div>
+                        </div>
+                    </div>
+                    ${client.notes ? `<div style="margin-top: 15px;"><strong>Notes:</strong><br>${client.notes}</div>` : ''}
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-warning" onclick="hideClientDetails()">← Back to List</button>
+                    </div>
+                </div>
+            `;
+            detailsDiv.style.display = 'block';
+        }
+
+        function hideClientDetails() {
+            document.getElementById('clientDetailsDisplay').style.display = 'none';
+        }
+
+        function callClient(phone) {
+            window.open(`tel:${phone}`, '_self');
+        }
+
+        function emailClient(email) {
+            window.open(`mailto:${email}`, '_self');
+        }
+
+        function deleteClient(clientId) {
+            if (confirm('Are you sure you want to delete this client?')) {
+                clients = clients.filter(c => c.id !== clientId);
+                renderClients();
+                populateClientOptions();
+            }
+        }
+
+        // Lead functions
+        function addLead(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const lead = {
+                id: Date.now(),
+                name: formData.get('leadName'),
+                phone: formData.get('leadPhone'),
+                email: formData.get('leadEmail'),
+                interest: formData.get('leadInterest'),
+                followUpDate: formData.get('followUpDate'),
+                status: formData.get('leadStatus'),
+                notes: formData.get('leadNotes')
+            };
+            
+            leads.push(lead);
+            renderLeads();
+            closeModal('addLeadModal');
+            event.target.reset();
+        }
+
+        function renderLeads() {
+            const tbody = document.querySelector('#leadsTable tbody');
+            tbody.innerHTML = '';
+            
+            const filteredLeads = getFilteredLeads();
+            
+            filteredLeads.forEach(lead => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${lead.name}</td>
+                    <td>
+                        📞 ${lead.phone}<br>
+                        ${lead.email ? `📧 ${lead.email}` : ''}
+                    </td>
+                    <td>${lead.interest}</td>
+                    <td>
+                        ${formatDate(lead.followUpDate)}
+                        ${new Date(lead.followUpDate) <= new Date() ? '<span class="reminder-badge">Due!</span>' : ''}
+                    </td>
+                    <td><span class="property-status status-${lead.status.replace('-', '')}">${lead.status}</span></td>
+                    <td class="contact-actions">
+                        <button class="btn btn-info btn-small" onclick="callClient('${lead.phone}')">📞 Call</button>
+                        ${lead.email ? `<button class="btn btn-success btn-small" onclick="emailClient('${lead.email}')">📧 Email</button>` : ''}
+                        <button class="btn btn-warning btn-small" onclick="convertToClient(${lead.id})">✨ Convert</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteLead(${lead.id})">🗑️</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function getFilteredLeads() {
+            let filtered = [...leads];
+            
+            const nameFilter = document.getElementById('leadNameFilter')?.value.toLowerCase();
+            const dateFilter = document.getElementById('leadDateFilter')?.value;
+            
+            if (nameFilter) {
+                filtered = filtered.filter(lead => 
+                    lead.name.toLowerCase().includes(nameFilter)
+                );
+            }
+            
+            if (dateFilter) {
+                filtered = filtered.filter(lead => lead.followUpDate === dateFilter);
+            }
+            
+            return filtered;
+        }
+
+        function filterLeads() {
+            renderLeads();
+        }
+
+        function convertToClient(leadId) {
+            const lead = leads.find(l => l.id === leadId);
+            if (!lead) return;
+            
+            if (confirm(`Convert ${lead.name} to a client?`)) {
+                const client = {
+                    id: Date.now(),
+                    name: lead.name,
+                    phone: lead.phone,
+                    email: lead.email || '',
+                    type: lead.interest === 'buying' ? 'buyer' : lead.interest === 'selling' ? 'seller' : 'tenant',
+                    birthday: '',
+                    budgetMin: 0,
+                    budgetMax: 0,
+                    reminderDate: '',
+                    notes: `Converted from lead. Original notes: ${lead.notes}`
+                };
+                
+                clients.push(client);
+                leads = leads.filter(l => l.id !== leadId);
+                
+                renderClients();
+                renderLeads();
+                populateClientOptions();
+                
+                alert(`${lead.name} has been converted to a client!`);
+            }
+        }
+
+        function deleteLead(leadId) {
+            if (confirm('Are you sure you want to delete this lead?')) {
+                leads = leads.filter(l => l.id !== leadId);
+                renderLeads();
+            }
+        }
+
+        // Property functions
+        function addProperty(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const property = {
+                id: Date.now(),
+                title: formData.get('title'),
+                price: parseInt(formData.get('price')),
+                type: formData.get('propertyType'),
+                status: formData.get('status'),
+                bedrooms: parseInt(formData.get('bedrooms')) || 0,
+                bathrooms: parseFloat(formData.get('bathrooms')) || 0,
+                size: parseInt(formData.get('size')) || 0,
+                location: formData.get('location'),
+                description: formData.get('description')
+            };
+            
+            properties.push(property);
+            renderProperties();
+            closeModal('addPropertyModal');
+            event.target.reset();
+        }
+
+        function renderProperties() {
+            const container = document.getElementById('propertiesList');
+            container.innerHTML = '';
+            
+            const filteredProperties = getFilteredProperties();
+            
+            filteredProperties.forEach(property => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 10px;">
+                        <div>
+                            <h3 style="margin: 0; color: #333;">${property.title}</h3>
+                            <p style="margin: 5px 0; color: #666;">📍 ${property.location}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="property-status status-${property.status}">${property.status}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin: 15px 0;">
+                        <div>
+                            <strong>Price:</strong><br>
+                            ${formatCurrency(property.price)}
+                        </div>
+                        <div>
+                            <strong>Type:</strong><br>
+                            For ${property.type === 'sale' ? 'Sale' : 'Rent'}
+                        </div>
+                        <div>
+                            <strong>Size:</strong><br>
+                            ${property.size} m²
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+                        <div>
+                            <strong>Bedrooms:</strong> ${property.bedrooms}
+                        </div>
+                        <div>
+                            <strong>Bathrooms:</strong> ${property.bathrooms}
+                        </div>
+                    </div>
+                    
+                    ${property.description ? `<div style="margin: 15px 0;"><strong>Description:</strong><br>${property.description}</div>` : ''}
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button class="btn btn-info btn-small" onclick="shareProperty(${property.id})">📤 Share</button>
+                        <button class="btn btn-warning btn-small" onclick="editProperty(${property.id})">✏️ Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteProperty(${property.id})">🗑️ Delete</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getFilteredProperties() {
+            let filtered = [...properties];
+            
+            const statusFilter = document.getElementById('statusFilter')?.value;
+            const typeFilter = document.getElementById('propertyTypeFilter')?.value;
+            const minPrice = parseInt(document.getElementById('propMinPrice')?.value) || 0;
+            const maxPrice = parseInt(document.getElementById('propMaxPrice')?.value) || Infinity;
+            
+            if (statusFilter) {
+                filtered = filtered.filter(property => property.status === statusFilter);
+            }
+            
+            if (typeFilter) {
+                filtered = filtered.filter(property => property.type === typeFilter);
+            }
+            
+            if (minPrice > 0 || maxPrice < Infinity) {
+                filtered = filtered.filter(property => 
+                    property.price >= minPrice && property.price <= maxPrice
+                );
+            }
+            
+            return filtered;
+        }
+
+        function filterProperties() {
+            renderProperties();
+        }
+
+        function shareProperty(propertyId) {
+            const property = properties.find(p => p.id === propertyId);
+            if (!property) return;
+            
+            const message = `🏠 ${property.title}\n📍 ${property.location}\n💰 ${formatCurrency(property.price)}\n🛏️ ${property.bedrooms} bedrooms, 🛁 ${property.bathrooms} bathrooms\n📐 ${property.size} m²\n\n${property.description}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: property.title,
+                    text: message
+                });
+            } else {
+                navigator.clipboard.writeText(message).then(() => {
+                    alert('Property details copied to clipboard!');
+                });
+            }
+        }
+
+        function editProperty(propertyId) {
+            alert('Edit functionality would be implemented here');
+        }
+
+        function deleteProperty(propertyId) {
+            if (confirm('Are you sure you want to delete this property?')) {
+                properties = properties.filter(p => p.id !== propertyId);
+                renderProperties();
+            }
+        }
+
+        // Reminder functions
+        function addReminder(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const reminder = {
+                id: Date.now(),
+                title: formData.get('reminderTitle'),
+                date: formData.get('reminderDate'),
+                time: formData.get('reminderTime'),
+                type: formData.get('reminderType'),
+                relatedClient: formData.get('relatedClient'),
+                notes: formData.get('reminderNotes')
+            };
+            
+            reminders.push(reminder);
+            renderReminders();
+            closeModal('addReminderModal');
+            event.target.reset();
+        }
+
+        function renderReminders() {
+            const container = document.getElementById('remindersList');
+            container.innerHTML = '';
+            
+            const filteredReminders = getFilteredReminders();
+            const today = new Date().toISOString().split('T')[0];
+            
+            // Sort by date
+            filteredReminders.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            filteredReminders.forEach(reminder => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                
+                const isOverdue = reminder.date < today;
+                const isToday = reminder.date === today;
+                
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: between; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <h4 style="margin: 0; color: #333;">${reminder.title}</h4>
+                            <p style="margin: 5px 0;">
+                                📅 ${formatDate(reminder.date)} 
+                                ${reminder.time ? `🕐 ${reminder.time}` : ''}
+                                ${isOverdue ? '<span class="reminder-badge">Overdue!</span>' : ''}
+                                ${isToday ? '<span class="birthday-badge">Today!</span>' : ''}
+                            </p>
+                            <p style="margin: 5px 0;">
+                                🏷️ <span class="property-status status-${reminder.type.replace('-', '')}">${reminder.type}</span>
+                                ${reminder.relatedClient ? ` | 👤 ${reminder.relatedClient}` : ''}
+                            </p>
+                            ${reminder.notes ? `<p style="margin: 10px 0; color: #666;">${reminder.notes}</p>` : ''}
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-small" onclick="completeReminder(${reminder.id})">✅ Complete</button>
+                            <button class="btn btn-danger btn-small" onclick="deleteReminder(${reminder.id})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getFilteredReminders() {
+            let filtered = [...reminders];
+            
+            const dateFilter = document.getElementById('reminderDateFilter')?.value;
+            const typeFilter = document.getElementById('reminderTypeFilter')?.value;
+            
+            if (dateFilter) {
+                filtered = filtered.filter(reminder => reminder.date === dateFilter);
+            }
+            
+            if (typeFilter) {
+                filtered = filtered.filter(reminder => reminder.type === typeFilter);
+            }
+            
+            return filtered;
+        }
+
+        function filterReminders() {
+            renderReminders();
+        }
+
+        function completeReminder(reminderId) {
+            if (confirm('Mark this reminder as complete?')) {
+                reminders = reminders.filter(r => r.id !== reminderId);
+                renderReminders();
+            }
+        }
+
+        function deleteReminder(reminderId) {
+            if (confirm('Are you sure you want to delete this reminder?')) {
+                reminders = reminders.filter(r => r.id !== reminderId);
+                renderReminders();
+            }
+        }
+
+        // Comment functions
+        function addComment(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const comment = {
+                id: Date.now(),
+                title: formData.get('commentTitle'),
+                category: formData.get('commentCategory'),
+                relatedTo: formData.get('relatedTo'),
+                content: formData.get('commentContent'),
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            comments.push(comment);
+            renderComments();
+            closeModal('addCommentModal');
+            event.target.reset();
+        }
+
+        function renderComments() {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = '';
+            
+            const filteredComments = getFilteredComments();
+            
+            // Sort by date (newest first)
+            filteredComments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            filteredComments.forEach(comment => {
+                const card = document.createElement('div');
+                card.className = 'property-card';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: between; align-items: flex-start; margin-bottom: 10px;">
+                        <div>
+                            <h4 style="margin: 0; color: #333;">${comment.title}</h4>
+                            <p style="margin: 5px 0; font-size: 12px; color: #666;">
+                                📅 ${formatDate(comment.date)} | 
+                                🏷️ <span class="property-status status-${comment.category}">${comment.category}</span>
+                                ${comment.relatedTo ? ` | 🔗 ${comment.relatedTo}` : ''}
+                            </p>
+                        </div>
+                        <div>
+                            <button class="btn btn-danger btn-small" onclick="deleteComment(${comment.id})">🗑️</button>
+                        </div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 3px solid #667eea;">
+                        ${comment.content.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getFilteredComments() {
+            let filtered = [...comments];
+            
+            const categoryFilter = document.getElementById('commentCategoryFilter')?.value;
+            
+            if (categoryFilter) {
+                filtered = filtered.filter(comment => comment.category === categoryFilter);
+            }
+            
+            return filtered;
+        }
+
+        function filterComments() {
+            renderComments();
+        }
+
+        function deleteComment(commentId) {
+            if (confirm('Are you sure you want to delete this note?')) {
+                comments = comments.filter(c => c.id !== commentId);
+                renderComments();
+            }
+        }
+
+        // Import functionality
+        function importListing() {
+            const url = document.getElementById('listingUrl').value.trim();
+            if (!url) {
+                alert('Please enter a URL to import');
+                return;
+            }
+            
+            // Simulate import process
+            const importResult = document.getElementById('importResult');
+            const importedDetails = document.getElementById('importedDetails');
+            
+            // Show loading
+            importedDetails.innerHTML = '⏳ Importing listing data...';
+            importResult.style.display = 'block';
+            
+            // Simulate delay and then show mock imported data
+            setTimeout(() => {
+                importedDetails.innerHTML = `
+                    <h4>📍 Luxury 4BR Home in Constantia</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
+                        <div><strong>Price:</strong> R3,250,000</div>
+                        <div><strong>Type:</strong> For Sale</div>
+                        <div><strong>Bedrooms:</strong> 4</div>
+                        <div><strong>Bathrooms:</strong> 3</div>
+                        <div><strong>Size:</strong> 320 m²</div>
+                        <div><strong>Location:</strong> Constantia, Cape Town</div>
+                    </div>
+                    <div><strong>Description:</strong><br>
+                    Magnificent family home situated in the heart of Constantia. Features include modern kitchen, spacious living areas, swimming pool, and double garage. Close to top schools and shopping centers.
+                    </div>
+                    <div style="margin-top: 15px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
+                        ✅ Data successfully imported from listing
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function saveImportedProperty() {
+            // This would normally extract the imported data and save it
+            const property = {
+                id: Date.now(),
+                title: "Luxury 4BR Home in Constantia",
+                price: 3250000,
+                type: "sale",
+                status: "active",
+                bedrooms: 4,
+                bathrooms: 3,
+                size: 320,
+                location: "Constantia, Cape Town",
+                description: "Magnificent family home situated in the heart of Constantia. Features include modern kitchen, spacious living areas, swimming pool, and double garage. Close to top schools and shopping centers."
+            };
+            
+            properties.push(property);
+            renderProperties();
+            
+            // Hide import result and show success
+            document.getElementById('importResult').style.display = 'none';
+            document.getElementById('listingUrl').value = '';
+            
+            alert('✅ Property successfully imported and saved!');
+            
+            // Switch to properties tab
+            showTab('properties');
+            document.querySelector('button[onclick="showTab(\'properties\')"]').classList.add('active');
+        }
+
+        // Chat functionality
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.style.cssText = 'padding: 10px; background: #667eea; color: white; border-radius: 8px; margin-bottom: 10px; margin-left: 20%; text-align: right;';
+            userMessage.innerHTML = `<strong>You:</strong> ${message}`;
+            messages.appendChild(userMessage);
+            
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(message);
+                const aiMessage = document.createElement('div');
+                aiMessage.style.cssText = 'padding: 10px; background: #e3f2fd; border-radius: 8px; margin-bottom: 10px; margin-right: 20%;';
+                aiMessage.innerHTML = `<strong>AI Assistant:</strong> ${aiResponse}`;
+                messages.appendChild(aiMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+        }
+
+        function generateAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            if (message.includes('email') || message.includes('message')) {
+                return `I'd be happy to help you create a professional email or message! Here's a template:<br><br>
+                <strong>Subject:</strong> Property Inquiry - [Property Address]<br><br>
+                <strong>Dear [Client Name],</strong><br><br>
+                Thank you for your interest in [property details]. I wanted to follow up on our previous conversation and provide you with some additional information...<br><br>
+                Would you like me to customize this for a specific situation?`;
+            } else if (message.includes('follow up') || message.includes('followup')) {
+                return `Here's a professional follow-up message template:<br><br>
+                <strong>Hi [Client Name],</strong><br><br>
+                I hope this message finds you well. I wanted to touch base regarding your property search for [area/requirements]. Since our last conversation, I have [new listings/updates] that might interest you...<br><br>
+                Would you be available for a quick call this week to discuss?`;
+            } else if (message.includes('birthday') || message.includes('greeting')) {
+                return `Here's a warm birthday greeting for your clients:<br><br>
+                <strong>Happy Birthday [Client Name]! 🎉</strong><br><br>
+                Wishing you a wonderful year ahead filled with happiness and success. Thank you for trusting us with your real estate needs. Looking forward to helping you find your dream home this year!<br><br>
+                Best wishes,<br>
+                Seyn & Kanya`;
+            } else {
+                return `I'm here to help you with professional real estate communications! I can assist with:<br>
+                • Email templates for clients<br>
+                • Follow-up messages<br>
+                • Birthday greetings<br>
+                • Property descriptions<br>
+                • Meeting confirmations<br><br>
+                What type of message would you like help creating?`;
+            }
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        // Populate client options for reminders
+        function populateClientOptions() {
+            const select = document.querySelector('select[name="relatedClient"]');
+            if (!select) return;
+            
+            // Keep the default option
+            const defaultOption = select.querySelector('option[value=""]');
+            select.innerHTML = '';
+            select.appendChild(defaultOption);
+            
+            // Add client options
+            clients.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.name;
+                option.textContent = client.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeData();
+        });
+    </script>
+</body>
+</html>
