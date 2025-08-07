@@ -1,0 +1,41 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5f5f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2d7d7d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b8b8b8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d4d4d4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a0a0a0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="16" height="16" rx="2.4" fill="url(#bgGrad)"/>
+  
+  <!-- Architectural towers icon -->
+  <g transform="translate(4.16, 4)">
+    <polygon points="0,5.76 1.536,5.76 2.6879999999999997,1.152 3.84,0 4.992,1.152 6.144,5.76 7.68,5.76" 
+             fill="url(#iconGrad)" 
+             stroke="none"/>
+  </g>
+  
+  <!-- TYSON text -->
+  <text x="8" y="12" 
+        font-family="Arial Black, Arial, sans-serif" 
+        font-size="1.28" 
+        font-weight="900" 
+        text-anchor="middle" 
+        fill="white"
+        letter-spacing="0.08">TYSON</text>
+        
+  <!-- PROPERTIES text -->
+  <text x="8" y="13.6" 
+        font-family="Arial Black, Arial, sans-serif" 
+        font-size="0.8959999999999999" 
+        font-weight="900" 
+        text-anchor="middle" 
+        fill="white"
+        letter-spacing="0.032">PROPERTIES</text>
+</svg>

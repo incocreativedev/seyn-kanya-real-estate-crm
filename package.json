@@ -1,0 +1,27 @@
+{
+  "name": "seyn-kanya-real-estate-crm",
+  "version": "1.0.0",
+  "description": "Real Estate CRM System with PostgreSQL Backend",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Build complete'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "pg": "^8.11.3",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "keywords": [
+    "real-estate",
+    "crm",
+    "netlify",
+    "postgresql",
+    "neon"
+  ],
+  "author": "Seyn & Kanya Real Estate",
+  "license": "MIT"
+}

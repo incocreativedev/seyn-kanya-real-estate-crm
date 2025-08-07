@@ -3,7 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seyn & Kanya Real Estate CRM</title>
+    <title>Tyson Properties Real Estate CRM</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Theme colors -->
+    <meta name="theme-color" content="#1a5f5f">
+    <meta name="msapplication-TileColor" content="#1a5f5f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Tyson Properties">
+    
+    <!-- Favicons and App Icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icon-16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/images/icon-192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/images/icon-512.png">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileImage" content="/images/icon-144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- Description for SEO and PWA -->
+    <meta name="description" content="Premium real estate CRM by Tyson Properties for managing clients, leads, properties, and reminders. Works offline with cloud sync.">
+    <meta name="keywords" content="real estate, CRM, property management, lead tracking, offline app, Tyson Properties">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Tyson Properties Real Estate CRM">
+    <meta property="og:description" content="Premium real estate CRM for managing clients, leads, properties, and reminders">
+    <meta property="og:image" content="/images/icon-512.png">
+    <meta property="og:type" content="website">
     <style>
         * {
             margin: 0;
@@ -13,17 +44,18 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
         }
         
         .header {
-            background: white;
+            background: #ffffff;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(26, 95, 95, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-bottom: 3px solid #1a5f5f;
         }
         
         .logo-section {
@@ -33,17 +65,32 @@
         }
         
         .logo {
-            width: 80px;
+            width: 120px;
             height: 80px;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            border-radius: 10px;
+            position: relative;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 40px;
+            background: linear-gradient(135deg, #b8b8b8 0%, #d4d4d4 50%, #a0a0a0 100%);
+            clip-path: polygon(50% 0%, 0% 100%, 20% 100%, 35% 20%, 65% 20%, 80% 100%, 100% 100%);
+            margin-bottom: 5px;
+            box-shadow: 0 2px 8px rgba(26, 95, 95, 0.2);
+        }
+        
+        .logo-text {
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 12px;
+            color: #1a5f5f;
+            letter-spacing: 0.5px;
             text-align: center;
+            line-height: 1.1;
         }
         
         .team-profiles {
@@ -79,46 +126,119 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
         .tab-container {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.1);
             overflow: hidden;
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(26, 95, 95, 0.15);
         }
         
         .tabs {
             display: flex;
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-bottom: 1px solid rgba(26, 95, 95, 0.1);
             overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            position: relative;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            display: none;
         }
         
         .tab {
-            padding: 15px 25px;
+            padding: 18px 28px;
             cursor: pointer;
             border: none;
             background: transparent;
             font-weight: 500;
-            color: #666;
-            transition: all 0.3s ease;
+            color: #6c757d;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        
+        .tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #1a5f5f, #2d7d7d);
+            border-radius: 2px 2px 0 0;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
         }
         
         .tab.active {
             background: white;
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
+            color: #1a5f5f;
+            font-weight: 600;
+            transform: translateY(-1px);
+        }
+        
+        .tab.active::before {
+            width: 80%;
         }
         
         .tab:hover {
-            background: #e9ecef;
+            background: rgba(26, 95, 95, 0.05);
+            color: #1a5f5f;
+            transform: translateY(-1px);
+        }
+        
+        .tab:hover::before {
+            width: 60%;
         }
         
         .tab-content {
             display: none;
-            padding: 25px;
+            padding: 32px;
+            animation: slideIn 0.4s ease-out;
         }
         
         .tab-content.active {
@@ -127,119 +247,299 @@
         
         .filters {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 20px;
+            margin-bottom: 28px;
             flex-wrap: wrap;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            box-shadow: 0 4px 16px rgba(26, 95, 95, 0.05);
         }
         
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
+            min-width: 140px;
+            flex: 1;
         }
         
         .filter-group label {
-            font-weight: 500;
-            color: #333;
-            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
         
         .filter-group input, .filter-group select {
-            padding: 8px 12px;
+            padding: 12px 16px;
             border: 2px solid #e9ecef;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 14px;
-            transition: border-color 0.3s ease;
-            min-width: 120px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            font-family: inherit;
         }
         
         .filter-group input:focus, .filter-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1a5f5f;
+            box-shadow: 0 0 0 3px rgba(26, 95, 95, 0.1), 0 4px 16px rgba(26, 95, 95, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .filter-group input:hover, .filter-group select:hover {
+            border-color: #ced4da;
+            transform: translateY(-1px);
+        }
+        
+        .search-bar {
+            position: relative;
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .search-bar::before {
+            content: '🔍';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 1;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
         }
         
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 95, 95, 0.3);
+            background: linear-gradient(135deg, #0d4444 0%, #1a5f5f 100%);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(26, 95, 95, 0.4);
         }
         
         .btn-success {
-            background: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            background: linear-gradient(135deg, #1e7e34 0%, #28a745 100%);
         }
         
         .btn-warning {
-            background: #ffc107;
+            background: linear-gradient(135deg, #ffc107 0%, #ffed4e 100%);
             color: #212529;
         }
         
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+            background: linear-gradient(135deg, #e0a800 0%, #ffc107 100%);
+        }
+        
         .btn-info {
-            background: #17a2b8;
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
             color: white;
+        }
+        
+        .btn-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.3);
+            background: linear-gradient(135deg, #117a8b 0%, #17a2b8 100%);
         }
         
         .btn-danger {
-            background: #dc3545;
+            background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
             color: white;
         }
         
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+            background: linear-gradient(135deg, #bd2130 0%, #dc3545 100%);
+        }
+        
         .btn-small {
-            padding: 5px 10px;
+            padding: 8px 16px;
             font-size: 12px;
+            border-radius: 8px;
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: #1a5f5f;
+            border: 2px solid #1a5f5f;
+            box-shadow: none;
+        }
+        
+        .btn-ghost:hover {
+            background: #1a5f5f;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 95, 95, 0.2);
         }
         
         .data-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             background: white;
-            border-radius: 8px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.1);
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            margin-bottom: 24px;
         }
         
         .data-table th {
-            background: #f8f9fa;
-            padding: 12px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 16px 20px;
             text-align: left;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 2px solid #dee2e6;
+            font-weight: 700;
+            color: #1a5f5f;
+            border-bottom: 2px solid rgba(26, 95, 95, 0.1);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .data-table th:first-child {
+            border-top-left-radius: 16px;
+        }
+        
+        .data-table th:last-child {
+            border-top-right-radius: 16px;
+        }
+        
+        .data-table th::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1a5f5f, #2d7d7d);
         }
         
         .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid #f1f3f4;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(26, 95, 95, 0.06);
+            font-size: 14px;
+            color: #495057;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
-        .data-table tr:hover {
-            background: #f8f9fa;
+        .data-table tbody tr {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .data-table tbody tr:hover {
+            background: linear-gradient(135deg, rgba(26, 95, 95, 0.02) 0%, rgba(26, 95, 95, 0.05) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(26, 95, 95, 0.08);
+        }
+        
+        .data-table tbody tr:hover td {
+            color: #1a5f5f;
+        }
+        
+        .data-table tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 16px;
+        }
+        
+        .data-table tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 16px;
+        }
+        
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.1);
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            margin-bottom: 32px;
         }
         
         .clickable-name {
-            color: #667eea;
+            color: #1a5f5f;
             cursor: pointer;
             font-weight: 500;
             text-decoration: underline;
         }
         
         .clickable-name:hover {
-            color: #764ba2;
+            color: #2d7d7d;
         }
         
         .form-group {
@@ -263,7 +563,7 @@
         
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #1a5f5f;
         }
         
         .form-row {
@@ -280,20 +580,112 @@
         
         .property-card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid #667eea;
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.08);
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .property-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #1a5f5f 0%, #2d7d7d 100%);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(26, 95, 95, 0.15);
+            border-color: rgba(26, 95, 95, 0.15);
+        }
+        
+        .property-card:hover::before {
+            width: 6px;
+            box-shadow: 0 0 20px rgba(26, 95, 95, 0.3);
+        }
+        
+        .property-card h3 {
+            color: #1a5f5f;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .property-card .property-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .property-card .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .property-card .meta-item .icon {
+            font-size: 16px;
+            color: #1a5f5f;
         }
         
         .client-detail-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
             color: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: 0 16px 48px rgba(26, 95, 95, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .client-detail-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+        }
+        
+        .client-detail-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 60px rgba(26, 95, 95, 0.25);
+        }
+        
+        .client-detail-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .client-detail-card .client-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            backdrop-filter: blur(10px);
         }
         
         .client-detail-grid {
@@ -304,17 +696,34 @@
         }
         
         .detail-item {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.12);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .detail-item:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
         }
         
         .detail-item strong {
             display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            opacity: 0.9;
+            margin-bottom: 8px;
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .detail-item span {
+            font-size: 16px;
+            font-weight: 500;
         }
         
         .property-status {
@@ -459,6 +868,152 @@
             flex: 1;
         }
         
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .fab:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 12px 40px rgba(26, 95, 95, 0.4);
+        }
+        
+        .fab:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+        
+        /* Quick Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.08);
+            border: 1px solid rgba(26, 95, 95, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a5f5f, #2d7d7d);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(26, 95, 95, 0.12);
+        }
+        
+        .stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            margin-bottom: 16px;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a5f5f;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Loading States */
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            font-size: 16px;
+            color: #6c757d;
+        }
+        
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #f0f0f0;
+            border-top: 3px solid #1a5f5f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        
+        .empty-state .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #495057;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 28px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
         @media (max-width: 768px) {
             .form-row, .form-row-3 {
                 grid-template-columns: 1fr;
@@ -470,15 +1025,43 @@
             
             .filters {
                 flex-direction: column;
+                padding: 20px;
             }
             
             .header {
                 flex-direction: column;
                 gap: 15px;
+                padding: 16px;
             }
             
             .tabs {
                 flex-wrap: wrap;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+            
+            .fab {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .search-bar {
+                min-width: 100%;
+            }
+            
+            .property-card, .client-detail-card {
+                margin-left: -8px;
+                margin-right: -8px;
             }
         }
     </style>
@@ -486,17 +1069,35 @@
 <body>
     <div class="header">
         <div class="logo-section">
-            <div class="logo">TYSON<br>HELDERBERG</div>
-            <h1 style="color: #333; font-size: 24px;">Real Estate CRM</h1>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">TYSON<br>PROPERTIES</div>
+            </div>
+            <h1 style="color: #1a5f5f; font-size: 24px; font-weight: 600;">Real Estate CRM</h1>
         </div>
         <div class="team-profiles">
-            <div class="profile">
-                <div class="profile-pic">SI</div>
-                <div class="profile-name">Seyn Ismail</div>
+            <div class="profile" id="userProfile" style="display: none;">
+                <div class="profile-pic" id="userInitials"></div>
+                <div class="profile-name" id="userName"></div>
             </div>
-            <div class="profile">
-                <div class="profile-pic">KQ</div>
-                <div class="profile-name">Kanya Qalinge</div>
+            <div style="margin-left: 20px; display: flex; gap: 10px; align-items: center;">
+                <button class="btn btn-info btn-small" onclick="exportData()">📊 Export Data</button>
+                <div class="dropdown" style="position: relative;">
+                    <button class="btn btn-success btn-small" onclick="toggleUserMenu()" id="userMenuButton">
+                        👤 <span id="userMenuName">User</span> ▼
+                    </button>
+                    <div id="userDropdown" class="dropdown-menu" style="display: none; position: absolute; right: 0; top: 100%; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 200px; z-index: 1000;">
+                        <div style="padding: 15px; border-bottom: 1px solid #eee;">
+                            <div style="font-weight: 600; margin-bottom: 5px;" id="dropdownUserName"></div>
+                            <div style="font-size: 12px; color: #666;" id="dropdownUserEmail"></div>
+                            <div style="font-size: 12px; color: #666;" id="dropdownUserCompany"></div>
+                        </div>
+                        <div style="padding: 10px;">
+                            <button class="btn btn-warning btn-small" onclick="editProfile()" style="width: 100%; margin-bottom: 5px;">✏️ Edit Profile</button>
+                            <button class="btn btn-danger btn-small" onclick="logout()" style="width: 100%;">🚪 Logout</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -517,31 +1118,59 @@
             <div id="contacts" class="tab-content active">
                 <h2>Client Management</h2>
                 
+                <!-- Quick Stats -->
+                <div class="stats-grid" id="clientStats">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number" id="totalClients">0</div>
+                        <div class="stat-label">Total Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏠</div>
+                        <div class="stat-number" id="buyerClients">0</div>
+                        <div class="stat-label">Buyers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number" id="sellerClients">0</div>
+                        <div class="stat-label">Sellers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏡</div>
+                        <div class="stat-number" id="tenantClients">0</div>
+                        <div class="stat-label">Tenants</div>
+                    </div>
+                </div>
+                
                 <div style="margin-bottom: 20px;">
                     <button class="btn btn-primary" onclick="showModal('addClientModal')">➕ Add New Client</button>
                 </div>
 
                 <div class="filters">
-                    <div class="filter-group">
-                        <label>Search Name:</label>
-                        <input type="text" id="nameFilter" placeholder="Enter name..." onkeyup="filterClients()">
+                    <div class="search-bar">
+                        <label>🔍 Search Clients</label>
+                        <input type="text" id="nameFilter" placeholder="Search by name, email, phone, or notes..." onkeyup="filterClients()" autocomplete="off">
                     </div>
                     <div class="filter-group">
-                        <label>Client Type:</label>
+                        <label>Client Type</label>
                         <select id="typeFilter" onchange="filterClients()">
                             <option value="">All Types</option>
-                            <option value="buyer">Buyer</option>
-                            <option value="seller">Seller</option>
-                            <option value="tenant">Tenant</option>
+                            <option value="buyer">🏠 Buyer</option>
+                            <option value="seller">💰 Seller</option>
+                            <option value="tenant">🏡 Tenant</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>Budget Range (ZAR):</label>
+                        <label>Budget Range (ZAR)</label>
                         <div class="price-range">
-                            <input type="number" id="minPrice" placeholder="R 5,000" min="5000" max="25000000" onchange="filterClients()">
-                            <span>to</span>
+                            <input type="number" id="minPrice" placeholder="R 50,000" min="5000" max="25000000" onchange="filterClients()">
+                            <span style="color: #6c757d; font-weight: 500;">to</span>
                             <input type="number" id="maxPrice" placeholder="R 25,000,000" min="5000" max="25000000" onchange="filterClients()">
                         </div>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn btn-ghost btn-small" onclick="clearFilters('clients')">🗑️ Clear</button>
+                        <button class="btn btn-primary btn-small" onclick="exportFilteredClients()">📤 Export</button>
                     </div>
                 </div>
 
@@ -612,6 +1241,10 @@
                 </div>
 
                 <div class="filters">
+                    <div class="filter-group">
+                        <label>Search Properties:</label>
+                        <input type="text" id="propertySearch" placeholder="Search title, location, description..." onkeyup="filterProperties()">
+                    </div>
                     <div class="filter-group">
                         <label>Status:</label>
                         <select id="statusFilter" onchange="filterProperties()">
@@ -1006,6 +1639,202 @@
         </div>
     </div>
 
+    <!-- Edit Property Modal -->
+    <div id="editPropertyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editPropertyModal')">&times;</span>
+            <h2>Edit Property</h2>
+            <form onsubmit="updateProperty(event)">
+                <input type="hidden" name="propertyId" id="editPropertyId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Property Title:</label>
+                        <input type="text" name="title" id="editPropertyTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (ZAR):</label>
+                        <input type="number" name="price" id="editPropertyPrice" min="5000" max="25000000" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select name="propertyType" id="editPropertyType" required>
+                            <option value="">Select Type</option>
+                            <option value="sale">For Sale</option>
+                            <option value="rent">For Rent</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select name="status" id="editPropertyStatus" required>
+                            <option value="">Select Status</option>
+                            <option value="active">Active</option>
+                            <option value="pending">Pending</option>
+                            <option value="sold">Sold/Rented</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Bedrooms:</label>
+                        <input type="number" name="bedrooms" id="editPropertyBedrooms" min="0" max="20">
+                    </div>
+                    <div class="form-group">
+                        <label>Bathrooms:</label>
+                        <input type="number" name="bathrooms" id="editPropertyBathrooms" min="0" max="20" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Size (sqm):</label>
+                        <input type="number" name="size" id="editPropertySize" min="1" max="10000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Location:</label>
+                    <input type="text" name="location" id="editPropertyLocation" placeholder="Area, City, Province" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="description" id="editPropertyDescription" rows="4" placeholder="Property description, features, etc..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Property</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Client Modal -->
+    <div id="editClientModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editClientModal')">&times;</span>
+            <h2>Edit Client</h2>
+            <form onsubmit="updateClient(event)">
+                <input type="hidden" name="clientId" id="editClientId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="name" id="editClientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number:</label>
+                        <input type="tel" name="phone" id="editClientPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email Address:</label>
+                        <input type="email" name="email" id="editClientEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Client Type:</label>
+                        <select name="type" id="editClientType" required>
+                            <option value="">Select Type</option>
+                            <option value="buyer">Buyer</option>
+                            <option value="seller">Seller</option>
+                            <option value="tenant">Tenant</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Birthday:</label>
+                        <input type="date" name="birthday" id="editClientBirthday">
+                    </div>
+                    <div class="form-group">
+                        <label>Next Reminder Date:</label>
+                        <input type="date" name="reminderDate" id="editClientReminderDate">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Budget Min (ZAR):</label>
+                        <input type="number" name="budgetMin" id="editClientBudgetMin" min="5000" max="25000000" placeholder="5000">
+                    </div>
+                    <div class="form-group">
+                        <label>Budget Max (ZAR):</label>
+                        <input type="number" name="budgetMax" id="editClientBudgetMax" min="5000" max="25000000" placeholder="25000000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Additional Notes:</label>
+                    <textarea name="notes" id="editClientNotes" rows="3" placeholder="Any additional information about the client..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Client</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Lead Modal -->
+    <div id="editLeadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editLeadModal')">&times;</span>
+            <h2>Edit Lead</h2>
+            <form onsubmit="updateLead(event)">
+                <input type="hidden" name="leadId" id="editLeadId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="leadName" id="editLeadName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number:</label>
+                        <input type="tel" name="leadPhone" id="editLeadPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email (Optional):</label>
+                        <input type="email" name="leadEmail" id="editLeadEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Interest:</label>
+                        <select name="leadInterest" id="editLeadInterest" required>
+                            <option value="">Select Interest</option>
+                            <option value="buying">Looking to Buy</option>
+                            <option value="selling">Looking to Sell</option>
+                            <option value="renting">Looking to Rent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Follow-up Date:</label>
+                        <input type="date" name="followUpDate" id="editLeadFollowUpDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select name="leadStatus" id="editLeadStatus" required>
+                            <option value="new">New Lead</option>
+                            <option value="contacted">Contacted</option>
+                            <option value="qualified">Qualified</option>
+                            <option value="converted">Converted</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Notes:</label>
+                    <textarea name="leadNotes" id="editLeadNotes" rows="3" placeholder="Lead source, preferences, etc..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Lead</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="showQuickAdd()" title="Quick Add">
+        ➕
+    </button>
+
+    <!-- Quick Add Menu (hidden by default) -->
+    <div id="quickAddMenu" style="position: fixed; bottom: 100px; right: 32px; z-index: 999; display: none;">
+        <div style="background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(26, 95, 95, 0.2); padding: 16px; min-width: 200px;">
+            <div style="margin-bottom: 12px; font-weight: 600; color: #1a5f5f; font-size: 14px;">Quick Add</div>
+            <button class="btn btn-primary btn-small" onclick="quickAddClient()" style="width: 100%; margin-bottom: 8px;">👤 Add Client</button>
+            <button class="btn btn-primary btn-small" onclick="quickAddLead()" style="width: 100%; margin-bottom: 8px;">🎯 Add Lead</button>
+            <button class="btn btn-primary btn-small" onclick="quickAddProperty()" style="width: 100%; margin-bottom: 8px;">🏠 Add Property</button>
+            <button class="btn btn-primary btn-small" onclick="quickAddReminder()" style="width: 100%;">⏰ Add Reminder</button>
+        </div>
+    </div>
+
     <script>
         // Data storage
         let clients = [];
@@ -1014,93 +1843,380 @@
         let reminders = [];
         let comments = [];
 
-        // Initialize with sample data
-        function initializeData() {
-            clients = [
-                {
-                    id: 1,
-                    name: "John Smith",
-                    phone: "+27 82 123 4567",
-                    email: "john.smith@email.com",
-                    type: "buyer",
-                    birthday: "1985-03-15",
-                    budgetMin: 1500000,
-                    budgetMax: 2500000,
-                    reminderDate: "2025-08-15",
-                    notes: "Looking for family home in Somerset West"
+        // Authentication state
+        let currentUser = null;
+        let authToken = null;
+
+        // API Configuration
+        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:8888/.netlify/functions' 
+            : '/.netlify/functions';
+
+        // Authentication Functions
+        function checkAuthentication() {
+            authToken = localStorage.getItem('authToken');
+            const userStr = localStorage.getItem('currentUser');
+            
+            if (authToken && userStr) {
+                try {
+                    currentUser = JSON.parse(userStr);
+                    updateUserInterface();
+                    return true;
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    clearAuthData();
+                }
+            }
+            
+            // Redirect to auth page if not authenticated
+            window.location.href = '/auth.html';
+            return false;
+        }
+        
+        function updateUserInterface() {
+            if (!currentUser) return;
+            
+            // Update user menu
+            const userMenuName = document.getElementById('userMenuName');
+            const dropdownUserName = document.getElementById('dropdownUserName');
+            const dropdownUserEmail = document.getElementById('dropdownUserEmail');
+            const dropdownUserCompany = document.getElementById('dropdownUserCompany');
+            
+            const firstName = currentUser.fullName.split(' ')[0];
+            userMenuName.textContent = firstName;
+            dropdownUserName.textContent = currentUser.fullName;
+            dropdownUserEmail.textContent = currentUser.email;
+            dropdownUserCompany.textContent = currentUser.company || 'No company';
+            
+            // Show user profile
+            const userProfile = document.getElementById('userProfile');
+            const userInitials = document.getElementById('userInitials');
+            const userName = document.getElementById('userName');
+            
+            const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+            userInitials.textContent = initials;
+            userName.textContent = firstName;
+            userProfile.style.display = 'block';
+        }
+        
+        function clearAuthData() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            authToken = null;
+            currentUser = null;
+        }
+        
+        function logout() {
+            const confirmed = confirm('Are you sure you want to logout?');
+            if (confirmed) {
+                clearAuthData();
+                window.location.href = '/auth.html';
+            }
+        }
+        
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        function editProfile() {
+            alert('Profile editing functionality will be implemented soon.');
+            toggleUserMenu();
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('userDropdown');
+            const menuButton = document.getElementById('userMenuButton');
+            
+            if (!menuButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // API Helper Functions
+        async function apiRequest(endpoint, options = {}) {
+            const url = `${API_BASE}/${endpoint}`;
+            
+            const defaultOptions = {
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                {
-                    id: 2,
-                    name: "Sarah Johnson",
-                    phone: "+27 83 987 6543",
-                    email: "sarah.johnson@email.com",
-                    type: "seller",
-                    birthday: "1978-11-22",
-                    budgetMin: 0,
-                    budgetMax: 0,
-                    reminderDate: "2025-08-10",
-                    notes: "Selling 3-bedroom house in Stellenbosch"
-                }
-            ];
+            };
+            
+            // Add auth token if available
+            if (authToken) {
+                defaultOptions.headers['Authorization'] = `Bearer ${authToken}`;
+            }
 
-            leads = [
-                {
-                    id: 1,
-                    name: "Mike Wilson",
-                    phone: "+27 84 555 1234",
-                    email: "mike.wilson@email.com",
-                    interest: "buying",
-                    followUpDate: "2025-08-12",
-                    status: "contacted",
-                    notes: "Interested in apartments under R1.5M"
-                }
-            ];
+            const config = { ...defaultOptions, ...options };
 
-            properties = [
-                {
-                    id: 1,
-                    title: "Beautiful 3BR Family Home",
-                    price: 2200000,
-                    type: "sale",
-                    status: "active",
-                    bedrooms: 3,
-                    bathrooms: 2,
-                    size: 250,
-                    location: "Somerset West, Western Cape",
-                    description: "Stunning family home with garden and mountain views"
+            try {
+                const response = await fetch(url, config);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    // Handle authentication errors
+                    if (response.status === 401) {
+                        clearAuthData();
+                        window.location.href = '/auth.html';
+                        return;
+                    }
+                    throw new Error(data.error || `HTTP error! status: ${response.status}`);
                 }
-            ];
+                
+                return data;
+            } catch (error) {
+                console.error(`API Error (${endpoint}):`, error);
+                
+                // Show user-friendly error message
+                alert(`Network error: ${error.message}. Please check your connection and try again.`);
+                throw error;
+            }
+        }
 
-            reminders = [
-                {
-                    id: 1,
-                    title: "Call John Smith - Follow up",
-                    date: "2025-08-08",
-                    time: "14:00",
-                    type: "call",
-                    relatedClient: "John Smith",
-                    notes: "Discuss new listings in budget range"
-                }
-            ];
-
-            comments = [
-                {
-                    id: 1,
-                    title: "Initial consultation with John Smith",
-                    category: "client",
-                    relatedTo: "John Smith",
-                    content: "Client is pre-approved for R2.5M bond. Looking for move-in ready properties.",
-                    date: new Date().toISOString().split('T')[0]
-                }
-            ];
-
-            // Render initial data
+        // Data Loading Functions
+        async function loadClients() {
+            try {
+                const data = await apiRequest('clients');
+                clients = data.clients || [];
             renderClients();
+                populateClientOptions();
+            } catch (error) {
+                console.error('Failed to load clients:', error);
+                // Fall back to localStorage if API fails
+                loadClientsFromStorage();
+            }
+        }
+
+        async function loadLeads() {
+            try {
+                const data = await apiRequest('leads');
+                leads = data.leads || [];
             renderLeads();
+            } catch (error) {
+                console.error('Failed to load leads:', error);
+                loadLeadsFromStorage();
+            }
+        }
+
+        async function loadProperties() {
+            try {
+                const data = await apiRequest('properties');
+                properties = data.properties || [];
             renderProperties();
+            } catch (error) {
+                console.error('Failed to load properties:', error);
+                loadPropertiesFromStorage();
+            }
+        }
+
+        async function loadReminders() {
+            try {
+                const data = await apiRequest('reminders');
+                reminders = data.reminders || [];
             renderReminders();
+            } catch (error) {
+                console.error('Failed to load reminders:', error);
+                loadRemindersFromStorage();
+            }
+        }
+
+        async function loadComments() {
+            try {
+                const data = await apiRequest('comments');
+                comments = data.comments || [];
             renderComments();
+            } catch (error) {
+                console.error('Failed to load comments:', error);
+                loadCommentsFromStorage();
+            }
+        }
+
+        // Fallback localStorage functions (for offline mode)
+        function loadClientsFromStorage() {
+            const saved = localStorage.getItem('crmClients');
+            if (saved) {
+                clients = JSON.parse(saved);
+            renderClients();
             populateClientOptions();
+            }
+        }
+
+        function loadLeadsFromStorage() {
+            const saved = localStorage.getItem('crmLeads');
+            if (saved) {
+                leads = JSON.parse(saved);
+            renderLeads();
+            }
+        }
+
+        function loadPropertiesFromStorage() {
+            const saved = localStorage.getItem('crmProperties');
+            if (saved) {
+                properties = JSON.parse(saved);
+            renderProperties();
+            }
+        }
+
+        function loadRemindersFromStorage() {
+            const saved = localStorage.getItem('crmReminders');
+            if (saved) {
+                reminders = JSON.parse(saved);
+            renderReminders();
+            }
+        }
+
+        function loadCommentsFromStorage() {
+            const saved = localStorage.getItem('crmComments');
+            if (saved) {
+                comments = JSON.parse(saved);
+            renderComments();
+            }
+        }
+
+        // Keep localStorage as backup
+        function saveDataToStorage() {
+            localStorage.setItem('crmClients', JSON.stringify(clients));
+            localStorage.setItem('crmLeads', JSON.stringify(leads));
+            localStorage.setItem('crmProperties', JSON.stringify(properties));
+            localStorage.setItem('crmReminders', JSON.stringify(reminders));
+            localStorage.setItem('crmComments', JSON.stringify(comments));
+        }
+
+        // Initialize application
+        async function initializeData() {
+            console.log('Initializing CRM data...');
+            
+            // Show loading indicator
+            showLoadingIndicator();
+            
+            try {
+                // Load all data from API
+                await Promise.all([
+                    loadClients(),
+                    loadLeads(),
+                    loadProperties(),
+                    loadReminders(),
+                    loadComments()
+                ]);
+                
+                console.log('Data loaded successfully from API');
+                
+                // Check if migration is needed
+                if (hasLocalStorageData() && !localStorage.getItem('migrated')) {
+                    showMigrationPrompt();
+                }
+                
+            } catch (error) {
+                console.error('Failed to load data from API, falling back to localStorage:', error);
+                
+                // Fallback to localStorage
+                loadAllFromStorage();
+            }
+            
+            hideLoadingIndicator();
+        }
+
+        function loadAllFromStorage() {
+            loadClientsFromStorage();
+            loadLeadsFromStorage();
+            loadPropertiesFromStorage();
+            loadRemindersFromStorage();
+            loadCommentsFromStorage();
+        }
+
+        function hasLocalStorageData() {
+            return localStorage.getItem('crmClients') || 
+                   localStorage.getItem('crmLeads') || 
+                   localStorage.getItem('crmProperties') || 
+                   localStorage.getItem('crmReminders') || 
+                   localStorage.getItem('crmComments');
+        }
+
+        function showLoadingIndicator() {
+            // Add loading indicator to the page
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loadingIndicator';
+            loadingDiv.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            `;
+            loadingDiv.innerHTML = `
+                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                    <div style="margin-bottom: 15px;">🔄 Loading CRM Data...</div>
+                    <div style="font-size: 12px; color: #666;">Connecting to database...</div>
+                </div>
+            `;
+            document.body.appendChild(loadingDiv);
+        }
+
+        function hideLoadingIndicator() {
+            const loadingDiv = document.getElementById('loadingIndicator');
+            if (loadingDiv) {
+                loadingDiv.remove();
+            }
+        }
+
+        function showMigrationPrompt() {
+            const migrate = confirm(
+                'We found data in your browser storage. Would you like to migrate it to the cloud database?\n\n' +
+                'This will ensure your data is backed up and accessible from anywhere.'
+            );
+            
+            if (migrate) {
+                migrateLocalStorageData();
+            } else {
+                localStorage.setItem('migrated', 'declined');
+            }
+        }
+
+        async function migrateLocalStorageData() {
+            try {
+                showLoadingIndicator();
+                
+                const localData = {
+                    clients: JSON.parse(localStorage.getItem('crmClients') || '[]'),
+                    leads: JSON.parse(localStorage.getItem('crmLeads') || '[]'),
+                    properties: JSON.parse(localStorage.getItem('crmProperties') || '[]'),
+                    reminders: JSON.parse(localStorage.getItem('crmReminders') || '[]'),
+                    comments: JSON.parse(localStorage.getItem('crmComments') || '[]')
+                };
+
+                const result = await apiRequest('migrate', {
+                    method: 'POST',
+                    body: JSON.stringify(localData)
+                });
+
+                hideLoadingIndicator();
+                
+                if (result.results) {
+                    alert(`Migration completed!\n\n` +
+                          `Clients: ${result.results.clients}\n` +
+                          `Leads: ${result.results.leads}\n` +
+                          `Properties: ${result.results.properties}\n` +
+                          `Reminders: ${result.results.reminders}\n` +
+                          `Comments: ${result.results.comments}\n\n` +
+                          (result.results.errors.length > 0 ? `Errors: ${result.results.errors.length}` : 'No errors!'));
+                }
+                
+                localStorage.setItem('migrated', 'completed');
+                
+                // Reload data from API
+                await initializeData();
+                
+            } catch (error) {
+                hideLoadingIndicator();
+                alert('Migration failed: ' + error.message);
+            }
         }
 
         // Tab functionality
@@ -1155,27 +2271,80 @@
         }
 
         // Client functions
-        function addClient(event) {
+        async function addClient(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const client = {
-                id: Date.now(),
-                name: formData.get('name'),
-                phone: formData.get('phone'),
-                email: formData.get('email'),
+            
+            // Basic validation
+            const name = formData.get('name').trim();
+            const phone = formData.get('phone').trim();
+            const email = formData.get('email').trim();
+            const budgetMin = parseInt(formData.get('budgetMin')) || 0;
+            const budgetMax = parseInt(formData.get('budgetMax')) || 0;
+            
+            // Validate required fields
+            if (!name || !phone || !email) {
+                alert('Please fill in all required fields (Name, Phone, Email)');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Validate phone format (basic South African format)
+            const phoneRegex = /^(\+27|0)[0-9]{9}$/;
+            if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+                alert('Please enter a valid South African phone number (e.g., +27 82 123 4567 or 082 123 4567)');
+                return;
+            }
+            
+            // Validate budget range
+            if (budgetMax > 0 && budgetMin > budgetMax) {
+                alert('Budget minimum cannot be greater than budget maximum');
+                return;
+            }
+            
+            const clientData = {
+                name: name,
+                phone: phone,
+                email: email,
                 type: formData.get('type'),
                 birthday: formData.get('birthday'),
-                budgetMin: parseInt(formData.get('budgetMin')) || 0,
-                budgetMax: parseInt(formData.get('budgetMax')) || 0,
+                budgetMin: budgetMin,
+                budgetMax: budgetMax,
                 reminderDate: formData.get('reminderDate'),
                 notes: formData.get('notes')
             };
             
-            clients.push(client);
+            try {
+                const result = await apiRequest('clients', {
+                    method: 'POST',
+                    body: JSON.stringify(clientData)
+                });
+                
+                // Add to local array
+                clients.push(result.client);
+                saveDataToStorage(); // Keep backup
+                
             renderClients();
             populateClientOptions();
             closeModal('addClientModal');
             event.target.reset();
+                alert('Client added successfully!');
+                
+            } catch (error) {
+                console.error('Failed to add client:', error);
+                // Handle specific API errors
+                if (error.message.includes('already exists')) {
+                    alert('A client with this email address already exists!');
+                } else {
+                    alert('Failed to add client. Please try again.');
+                }
+            }
         }
 
         function renderClients() {
@@ -1220,6 +2389,7 @@
                     <td class="contact-actions">
                         <button class="btn btn-info btn-small" onclick="callClient('${client.phone}')">📞 Call</button>
                         <button class="btn btn-success btn-small" onclick="emailClient('${client.email}')">📧 Email</button>
+                        <button class="btn btn-warning btn-small" onclick="editClient(${client.id})">✏️ Edit</button>
                         <button class="btn btn-danger btn-small" onclick="deleteClient(${client.id})">🗑️</button>
                     </td>
                 `;
@@ -1237,7 +2407,10 @@
             
             if (nameFilter) {
                 filtered = filtered.filter(client => 
-                    client.name.toLowerCase().includes(nameFilter)
+                    client.name.toLowerCase().includes(nameFilter) ||
+                    client.email.toLowerCase().includes(nameFilter) ||
+                    client.phone.toLowerCase().includes(nameFilter) ||
+                    (client.notes && client.notes.toLowerCase().includes(nameFilter))
                 );
             }
             
@@ -1308,20 +2481,98 @@
             window.open(`mailto:${email}`, '_self');
         }
 
-        function deleteClient(clientId) {
-            if (confirm('Are you sure you want to delete this client?')) {
-                clients = clients.filter(c => c.id !== clientId);
+        function editClient(clientId) {
+            const client = clients.find(c => c.id === clientId);
+            if (!client) return;
+            
+            // Populate the edit form with current client data
+            document.getElementById('editClientId').value = client.id;
+            document.getElementById('editClientName').value = client.name;
+            document.getElementById('editClientPhone').value = client.phone;
+            document.getElementById('editClientEmail').value = client.email;
+            document.getElementById('editClientType').value = client.type;
+            document.getElementById('editClientBirthday').value = client.birthday;
+            document.getElementById('editClientReminderDate').value = client.reminderDate;
+            document.getElementById('editClientBudgetMin').value = client.budgetMin;
+            document.getElementById('editClientBudgetMax').value = client.budgetMax;
+            document.getElementById('editClientNotes').value = client.notes;
+            
+            showModal('editClientModal');
+        }
+
+        async function updateClient(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const clientId = parseInt(formData.get('clientId'));
+            
+            const clientData = {
+                id: clientId,
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                email: formData.get('email'),
+                type: formData.get('type'),
+                birthday: formData.get('birthday'),
+                budgetMin: parseInt(formData.get('budgetMin')) || 0,
+                budgetMax: parseInt(formData.get('budgetMax')) || 0,
+                reminderDate: formData.get('reminderDate'),
+                notes: formData.get('notes')
+            };
+            
+            try {
+                const result = await apiRequest('clients', {
+                    method: 'PUT',
+                    body: JSON.stringify(clientData)
+                });
+                
+                // Update local array
+                const clientIndex = clients.findIndex(c => c.id === clientId);
+                if (clientIndex !== -1) {
+                    clients[clientIndex] = result.client;
+                    saveDataToStorage(); // Keep backup
+                }
+                
                 renderClients();
                 populateClientOptions();
+                closeModal('editClientModal');
+                alert('Client updated successfully!');
+                
+            } catch (error) {
+                console.error('Failed to update client:', error);
+                alert('Failed to update client. Please try again.');
+            }
+        }
+
+        async function deleteClient(clientId) {
+            if (!confirm('Are you sure you want to delete this client?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('clients', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: clientId })
+                });
+                
+                // Remove from local array
+                clients = clients.filter(c => c.id !== clientId);
+                saveDataToStorage(); // Keep backup
+                
+                renderClients();
+                populateClientOptions();
+                alert('Client deleted successfully!');
+                
+            } catch (error) {
+                console.error('Failed to delete client:', error);
+                alert('Failed to delete client. Please try again.');
             }
         }
 
         // Lead functions
-        function addLead(event) {
+        async function addLead(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const lead = {
-                id: Date.now(),
+            
+            const leadData = {
                 name: formData.get('leadName'),
                 phone: formData.get('leadPhone'),
                 email: formData.get('leadEmail'),
@@ -1331,10 +2582,23 @@
                 notes: formData.get('leadNotes')
             };
             
-            leads.push(lead);
+            try {
+                const result = await apiRequest('leads', {
+                    method: 'POST',
+                    body: JSON.stringify(leadData)
+                });
+                
+                leads.push(result.lead);
+                saveDataToStorage();
             renderLeads();
             closeModal('addLeadModal');
             event.target.reset();
+                alert('Lead added successfully!');
+                
+            } catch (error) {
+                console.error('Failed to add lead:', error);
+                alert('Failed to add lead. Please try again.');
+            }
         }
 
         function renderLeads() {
@@ -1360,6 +2624,7 @@
                     <td class="contact-actions">
                         <button class="btn btn-info btn-small" onclick="callClient('${lead.phone}')">📞 Call</button>
                         ${lead.email ? `<button class="btn btn-success btn-small" onclick="emailClient('${lead.email}')">📧 Email</button>` : ''}
+                        <button class="btn btn-warning btn-small" onclick="editLead(${lead.id})">✏️ Edit</button>
                         <button class="btn btn-warning btn-small" onclick="convertToClient(${lead.id})">✨ Convert</button>
                         <button class="btn btn-danger btn-small" onclick="deleteLead(${lead.id})">🗑️</button>
                     </td>
@@ -1376,7 +2641,11 @@
             
             if (nameFilter) {
                 filtered = filtered.filter(lead => 
-                    lead.name.toLowerCase().includes(nameFilter)
+                    lead.name.toLowerCase().includes(nameFilter) ||
+                    (lead.email && lead.email.toLowerCase().includes(nameFilter)) ||
+                    lead.phone.toLowerCase().includes(nameFilter) ||
+                    lead.interest.toLowerCase().includes(nameFilter) ||
+                    (lead.notes && lead.notes.toLowerCase().includes(nameFilter))
                 );
             }
             
@@ -1411,6 +2680,7 @@
                 
                 clients.push(client);
                 leads = leads.filter(l => l.id !== leadId);
+                saveDataToStorage();
                 
                 renderClients();
                 renderLeads();
@@ -1420,19 +2690,89 @@
             }
         }
 
-        function deleteLead(leadId) {
-            if (confirm('Are you sure you want to delete this lead?')) {
-                leads = leads.filter(l => l.id !== leadId);
+        function editLead(leadId) {
+            const lead = leads.find(l => l.id === leadId);
+            if (!lead) return;
+            
+            // Populate the edit form with current lead data
+            document.getElementById('editLeadId').value = lead.id;
+            document.getElementById('editLeadName').value = lead.name;
+            document.getElementById('editLeadPhone').value = lead.phone;
+            document.getElementById('editLeadEmail').value = lead.email;
+            document.getElementById('editLeadInterest').value = lead.interest;
+            document.getElementById('editLeadFollowUpDate').value = lead.followUpDate;
+            document.getElementById('editLeadStatus').value = lead.status;
+            document.getElementById('editLeadNotes').value = lead.notes;
+            
+            showModal('editLeadModal');
+        }
+
+        async function updateLead(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const leadId = parseInt(formData.get('leadId'));
+            
+            const leadData = {
+                id: leadId,
+                name: formData.get('leadName'),
+                phone: formData.get('leadPhone'),
+                email: formData.get('leadEmail'),
+                interest: formData.get('leadInterest'),
+                followUpDate: formData.get('followUpDate'),
+                status: formData.get('leadStatus'),
+                notes: formData.get('leadNotes')
+            };
+            
+            try {
+                const result = await apiRequest('leads', {
+                    method: 'PUT',
+                    body: JSON.stringify(leadData)
+                });
+                
+                const leadIndex = leads.findIndex(l => l.id === leadId);
+                if (leadIndex !== -1) {
+                    leads[leadIndex] = result.lead;
+                    saveDataToStorage();
+                }
+                
                 renderLeads();
+                closeModal('editLeadModal');
+                alert('Lead updated successfully!');
+                
+            } catch (error) {
+                console.error('Failed to update lead:', error);
+                alert('Failed to update lead. Please try again.');
+            }
+        }
+
+        async function deleteLead(leadId) {
+            if (!confirm('Are you sure you want to delete this lead?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('leads', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: leadId })
+                });
+                
+                leads = leads.filter(l => l.id !== leadId);
+                saveDataToStorage();
+                renderLeads();
+                alert('Lead deleted successfully!');
+                
+            } catch (error) {
+                console.error('Failed to delete lead:', error);
+                alert('Failed to delete lead. Please try again.');
             }
         }
 
         // Property functions
-        function addProperty(event) {
+        async function addProperty(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const property = {
-                id: Date.now(),
+            
+            const propertyData = {
                 title: formData.get('title'),
                 price: parseInt(formData.get('price')),
                 type: formData.get('propertyType'),
@@ -1444,10 +2784,23 @@
                 description: formData.get('description')
             };
             
-            properties.push(property);
+            try {
+                const result = await apiRequest('properties', {
+                    method: 'POST',
+                    body: JSON.stringify(propertyData)
+                });
+                
+                properties.push(result.property);
+                saveDataToStorage();
             renderProperties();
             closeModal('addPropertyModal');
             event.target.reset();
+                alert('Property added successfully!');
+                
+            } catch (error) {
+                console.error('Failed to add property:', error);
+                alert('Failed to add property. Please try again.');
+            }
         }
 
         function renderProperties() {
@@ -1514,6 +2867,16 @@
             const minPrice = parseInt(document.getElementById('propMinPrice')?.value) || 0;
             const maxPrice = parseInt(document.getElementById('propMaxPrice')?.value) || Infinity;
             
+            // Add a text search for properties
+            const searchTerm = document.getElementById('propertySearch')?.value?.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(property => 
+                    property.title.toLowerCase().includes(searchTerm) ||
+                    property.location.toLowerCase().includes(searchTerm) ||
+                    (property.description && property.description.toLowerCase().includes(searchTerm))
+                );
+            }
+            
             if (statusFilter) {
                 filtered = filtered.filter(property => property.status === statusFilter);
             }
@@ -1554,22 +2917,92 @@
         }
 
         function editProperty(propertyId) {
-            alert('Edit functionality would be implemented here');
+            const property = properties.find(p => p.id === propertyId);
+            if (!property) return;
+            
+            // Populate the edit form with current property data
+            document.getElementById('editPropertyId').value = property.id;
+            document.getElementById('editPropertyTitle').value = property.title;
+            document.getElementById('editPropertyPrice').value = property.price;
+            document.getElementById('editPropertyType').value = property.type;
+            document.getElementById('editPropertyStatus').value = property.status;
+            document.getElementById('editPropertyBedrooms').value = property.bedrooms;
+            document.getElementById('editPropertyBathrooms').value = property.bathrooms;
+            document.getElementById('editPropertySize').value = property.size;
+            document.getElementById('editPropertyLocation').value = property.location;
+            document.getElementById('editPropertyDescription').value = property.description;
+            
+            showModal('editPropertyModal');
         }
 
-        function deleteProperty(propertyId) {
-            if (confirm('Are you sure you want to delete this property?')) {
-                properties = properties.filter(p => p.id !== propertyId);
+        async function updateProperty(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const propertyId = parseInt(formData.get('propertyId'));
+            
+            const propertyData = {
+                id: propertyId,
+                title: formData.get('title'),
+                price: parseInt(formData.get('price')),
+                type: formData.get('propertyType'),
+                status: formData.get('status'),
+                bedrooms: parseInt(formData.get('bedrooms')) || 0,
+                bathrooms: parseFloat(formData.get('bathrooms')) || 0,
+                size: parseInt(formData.get('size')) || 0,
+                location: formData.get('location'),
+                description: formData.get('description')
+            };
+            
+            try {
+                const result = await apiRequest('properties', {
+                    method: 'PUT',
+                    body: JSON.stringify(propertyData)
+                });
+                
+                const propertyIndex = properties.findIndex(p => p.id === propertyId);
+                if (propertyIndex !== -1) {
+                    properties[propertyIndex] = result.property;
+                    saveDataToStorage();
+                }
+                
                 renderProperties();
+                closeModal('editPropertyModal');
+                alert('Property updated successfully!');
+                
+            } catch (error) {
+                console.error('Failed to update property:', error);
+                alert('Failed to update property. Please try again.');
+            }
+        }
+
+        async function deleteProperty(propertyId) {
+            if (!confirm('Are you sure you want to delete this property?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('properties', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: propertyId })
+                });
+                
+                properties = properties.filter(p => p.id !== propertyId);
+                saveDataToStorage();
+                renderProperties();
+                alert('Property deleted successfully!');
+                
+            } catch (error) {
+                console.error('Failed to delete property:', error);
+                alert('Failed to delete property. Please try again.');
             }
         }
 
         // Reminder functions
-        function addReminder(event) {
+        async function addReminder(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const reminder = {
-                id: Date.now(),
+            
+            const reminderData = {
                 title: formData.get('reminderTitle'),
                 date: formData.get('reminderDate'),
                 time: formData.get('reminderTime'),
@@ -1578,10 +3011,23 @@
                 notes: formData.get('reminderNotes')
             };
             
-            reminders.push(reminder);
+            try {
+                const result = await apiRequest('reminders', {
+                    method: 'POST',
+                    body: JSON.stringify(reminderData)
+                });
+                
+                reminders.push(result.reminder);
+                saveDataToStorage();
             renderReminders();
             closeModal('addReminderModal');
             event.target.reset();
+                alert('Reminder added successfully!');
+                
+            } catch (error) {
+                console.error('Failed to add reminder:', error);
+                alert('Failed to add reminder. Please try again.');
+            }
         }
 
         function renderReminders() {
@@ -1648,26 +3094,56 @@
             renderReminders();
         }
 
-        function completeReminder(reminderId) {
-            if (confirm('Mark this reminder as complete?')) {
+        async function completeReminder(reminderId) {
+            if (!confirm('Mark this reminder as complete?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('reminders', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: reminderId })
+                });
+                
                 reminders = reminders.filter(r => r.id !== reminderId);
+                saveDataToStorage();
                 renderReminders();
+                alert('Reminder marked as complete!');
+                
+            } catch (error) {
+                console.error('Failed to complete reminder:', error);
+                alert('Failed to complete reminder. Please try again.');
             }
         }
 
-        function deleteReminder(reminderId) {
-            if (confirm('Are you sure you want to delete this reminder?')) {
+        async function deleteReminder(reminderId) {
+            if (!confirm('Are you sure you want to delete this reminder?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('reminders', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: reminderId })
+                });
+                
                 reminders = reminders.filter(r => r.id !== reminderId);
+                saveDataToStorage();
                 renderReminders();
+                alert('Reminder deleted successfully!');
+                
+            } catch (error) {
+                console.error('Failed to delete reminder:', error);
+                alert('Failed to delete reminder. Please try again.');
             }
         }
 
         // Comment functions
-        function addComment(event) {
+        async function addComment(event) {
             event.preventDefault();
             const formData = new FormData(event.target);
-            const comment = {
-                id: Date.now(),
+            
+            const commentData = {
                 title: formData.get('commentTitle'),
                 category: formData.get('commentCategory'),
                 relatedTo: formData.get('relatedTo'),
@@ -1675,10 +3151,23 @@
                 date: new Date().toISOString().split('T')[0]
             };
             
-            comments.push(comment);
+            try {
+                const result = await apiRequest('comments', {
+                    method: 'POST',
+                    body: JSON.stringify(commentData)
+                });
+                
+                comments.push(result.comment);
+                saveDataToStorage();
             renderComments();
             closeModal('addCommentModal');
             event.target.reset();
+                alert('Note added successfully!');
+                
+            } catch (error) {
+                console.error('Failed to add note:', error);
+                alert('Failed to add note. Please try again.');
+            }
         }
 
         function renderComments() {
@@ -1731,19 +3220,53 @@
             renderComments();
         }
 
-        function deleteComment(commentId) {
-            if (confirm('Are you sure you want to delete this note?')) {
+        async function deleteComment(commentId) {
+            if (!confirm('Are you sure you want to delete this note?')) {
+                return;
+            }
+            
+            try {
+                await apiRequest('comments', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ id: commentId })
+                });
+                
                 comments = comments.filter(c => c.id !== commentId);
+                saveDataToStorage();
                 renderComments();
+                alert('Note deleted successfully!');
+                
+            } catch (error) {
+                console.error('Failed to delete note:', error);
+                alert('Failed to delete note. Please try again.');
             }
         }
 
         // Import functionality
         function importListing() {
             const url = document.getElementById('listingUrl').value.trim();
+            
+            // Validate URL
             if (!url) {
                 alert('Please enter a URL to import');
                 return;
+            }
+            
+            // Basic URL validation
+            try {
+                new URL(url);
+            } catch (e) {
+                alert('Please enter a valid URL (e.g., https://property24.com/...)');
+                return;
+            }
+            
+            // Check if URL is from supported sites
+            const supportedSites = ['property24.com', 'privateproperty.co.za', 'realnet.co.za'];
+            const isSupported = supportedSites.some(site => url.toLowerCase().includes(site));
+            
+            if (!isSupported) {
+                const proceed = confirm(`This URL doesn't appear to be from a supported property site (${supportedSites.join(', ')}). Continue anyway?`);
+                if (!proceed) return;
             }
             
             // Simulate import process
@@ -1756,6 +3279,22 @@
             
             // Simulate delay and then show mock imported data
             setTimeout(() => {
+                // Simulate different outcomes based on URL
+                const random = Math.random();
+                
+                if (random < 0.1) {
+                    // Simulate import failure
+                    importedDetails.innerHTML = `
+                        <div style="padding: 15px; background: #f8d7da; border-radius: 5px; color: #721c24;">
+                            ❌ Failed to import listing data. This could be due to:<br>
+                            • The listing page has changed format<br>
+                            • Network connectivity issues<br>
+                            • The listing may have been removed<br><br>
+                            Please try again or enter property details manually.
+                        </div>
+                    `;
+                } else {
+                    // Successful import with mock data
                 importedDetails.innerHTML = `
                     <h4>📍 Luxury 4BR Home in Constantia</h4>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0;">
@@ -1770,16 +3309,16 @@
                     Magnificent family home situated in the heart of Constantia. Features include modern kitchen, spacious living areas, swimming pool, and double garage. Close to top schools and shopping centers.
                     </div>
                     <div style="margin-top: 15px; padding: 10px; background: #e8f5e8; border-radius: 5px;">
-                        ✅ Data successfully imported from listing
+                            ✅ Data successfully imported from ${new URL(url).hostname}
                     </div>
                 `;
+                }
             }, 2000);
         }
 
-        function saveImportedProperty() {
+        async function saveImportedProperty() {
             // This would normally extract the imported data and save it
-            const property = {
-                id: Date.now(),
+            const propertyData = {
                 title: "Luxury 4BR Home in Constantia",
                 price: 3250000,
                 type: "sale",
@@ -1791,18 +3330,30 @@
                 description: "Magnificent family home situated in the heart of Constantia. Features include modern kitchen, spacious living areas, swimming pool, and double garage. Close to top schools and shopping centers."
             };
             
-            properties.push(property);
+            try {
+                const result = await apiRequest('properties', {
+                    method: 'POST',
+                    body: JSON.stringify(propertyData)
+                });
+                
+                properties.push(result.property);
+                saveDataToStorage();
             renderProperties();
             
             // Hide import result and show success
             document.getElementById('importResult').style.display = 'none';
             document.getElementById('listingUrl').value = '';
             
-            alert('✅ Property successfully imported and saved!');
+                alert('✅ Property successfully imported and saved to database!');
             
             // Switch to properties tab
             showTab('properties');
             document.querySelector('button[onclick="showTab(\'properties\')"]').classList.add('active');
+                
+            } catch (error) {
+                console.error('Failed to save imported property:', error);
+                alert('Failed to save imported property to database. Please try again.');
+            }
         }
 
         // Chat functionality
@@ -1888,10 +3439,486 @@
             });
         }
 
+        // Export data functionality
+        function exportData() {
+            const choice = confirm('Export as JSON? Click OK for JSON, Cancel for CSV');
+            const timestamp = new Date().toISOString().split('T')[0];
+            
+            if (choice) {
+                // Export as JSON
+                const data = {
+                    exportDate: new Date().toISOString(),
+                    clients: clients,
+                    leads: leads,
+                    properties: properties,
+                    reminders: reminders,
+                    comments: comments
+                };
+                
+                downloadFile(
+                    JSON.stringify(data, null, 2),
+                    `crm-data-${timestamp}.json`,
+                    'application/json'
+                );
+            } else {
+                // Export as CSV (clients only for simplicity)
+                let csv = 'Type,Name,Email,Phone,Client Type,Budget Min,Budget Max,Notes\n';
+                
+                clients.forEach(client => {
+                    csv += `Client,"${client.name}","${client.email}","${client.phone}","${client.type}",${client.budgetMin},${client.budgetMax},"${client.notes || ''}"\n`;
+                });
+                
+                leads.forEach(lead => {
+                    csv += `Lead,"${lead.name}","${lead.email || ''}","${lead.phone}","${lead.interest}",,,,"${lead.notes || ''}"\n`;
+                });
+                
+                downloadFile(csv, `crm-contacts-${timestamp}.csv`, 'text/csv');
+            }
+        }
+
+        function downloadFile(content, fileName, contentType) {
+            const blob = new Blob([content], { type: contentType });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Notification functionality
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted');
+                        checkForUpcomingReminders();
+                    }
+                });
+            }
+        }
+
+        function checkForUpcomingReminders() {
+            if (!('Notification' in window) || Notification.permission !== 'granted') {
+                return;
+            }
+
+            const today = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+            
+            const todayStr = today.toISOString().split('T')[0];
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            // Check reminders
+            const upcomingReminders = reminders.filter(reminder => 
+                reminder.date === todayStr || reminder.date === tomorrowStr
+            );
+
+            // Check client birthdays
+            const upcomingBirthdays = clients.filter(client => {
+                if (!client.birthday) return false;
+                const birthday = new Date(client.birthday);
+                birthday.setFullYear(today.getFullYear());
+                
+                const birthdayStr = birthday.toISOString().split('T')[0];
+                return birthdayStr === todayStr || birthdayStr === tomorrowStr;
+            });
+
+            // Show notifications
+            upcomingReminders.forEach(reminder => {
+                const when = reminder.date === todayStr ? 'today' : 'tomorrow';
+                new Notification(`Reminder ${when}: ${reminder.title}`, {
+                    body: reminder.notes || 'Click to view details',
+                    icon: '📅'
+                });
+            });
+
+            upcomingBirthdays.forEach(client => {
+                const when = todayStr === new Date(client.birthday).toISOString().split('T')[0] ? 'today' : 'tomorrow';
+                new Notification(`Birthday ${when}: ${client.name}`, {
+                    body: 'Don\'t forget to wish them a happy birthday!',
+                    icon: '🎂'
+                });
+            });
+        }
+
+        // PWA Installation functionality
+        let deferredPrompt;
+        let installButton;
+
+        function initializePWA() {
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New content available, show update prompt
+                                    showUpdatePrompt();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            }
+
+            // Handle PWA install prompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showInstallButton();
+            });
+
+            // Handle app installed
+            window.addEventListener('appinstalled', () => {
+                console.log('PWA was installed');
+                hideInstallButton();
+                showInstalledMessage();
+            });
+        }
+
+        function showInstallButton() {
+            // Create install button if it doesn't exist
+            if (!installButton) {
+                installButton = document.createElement('button');
+                installButton.className = 'btn btn-primary btn-small';
+                installButton.innerHTML = '📱 Install App';
+                installButton.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+                `;
+                installButton.onclick = installPWA;
+                document.body.appendChild(installButton);
+            }
+        }
+
+        function hideInstallButton() {
+            if (installButton) {
+                installButton.remove();
+                installButton = null;
+            }
+        }
+
+        async function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log('Install prompt outcome:', outcome);
+                deferredPrompt = null;
+                hideInstallButton();
+            }
+        }
+
+        function showUpdatePrompt() {
+            const updateAvailable = confirm(
+                'A new version of the app is available. Would you like to update now?'
+            );
+            
+            if (updateAvailable) {
+                window.location.reload();
+            }
+        }
+
+        function showInstalledMessage() {
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 1001;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+            `;
+            message.innerHTML = '✅ App installed successfully!';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 5000);
+        }
+
+        // Handle URL shortcuts
+        function handleShortcuts() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            
+            if (action === 'add-client') {
+                showModal('addClientModal');
+            } else if (action === 'add-property') {
+                showModal('addPropertyModal');
+            }
+        }
+
+        // Floating Action Button Functions
+        function showQuickAdd() {
+            const menu = document.getElementById('quickAddMenu');
+            const fab = document.querySelector('.fab');
+            
+            if (menu.style.display === 'none' || !menu.style.display) {
+                menu.style.display = 'block';
+                menu.style.animation = 'slideIn 0.3s ease-out';
+                fab.innerHTML = '✕';
+                fab.style.transform = 'rotate(45deg)';
+            } else {
+                menu.style.display = 'none';
+                fab.innerHTML = '➕';
+                fab.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function quickAddClient() {
+            hideQuickAdd();
+            showTab('contacts');
+            setTimeout(() => showModal('addClientModal'), 100);
+        }
+
+        function quickAddLead() {
+            hideQuickAdd();
+            showTab('leads');
+            setTimeout(() => showModal('addLeadModal'), 100);
+        }
+
+        function quickAddProperty() {
+            hideQuickAdd();
+            showTab('properties');
+            setTimeout(() => showModal('addPropertyModal'), 100);
+        }
+
+        function quickAddReminder() {
+            hideQuickAdd();
+            showTab('reminders');
+            setTimeout(() => showModal('addReminderModal'), 100);
+        }
+
+        function hideQuickAdd() {
+            const menu = document.getElementById('quickAddMenu');
+            const fab = document.querySelector('.fab');
+            menu.style.display = 'none';
+            fab.innerHTML = '➕';
+            fab.style.transform = 'rotate(0deg)';
+        }
+
+        // Close quick add menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('quickAddMenu');
+            const fab = document.querySelector('.fab');
+            
+            if (!menu.contains(event.target) && !fab.contains(event.target)) {
+                hideQuickAdd();
+            }
+        });
+
+        // Enhanced Loading States
+        function showLoadingIndicator(container) {
+            if (typeof container === 'string') {
+                container = document.getElementById(container);
+            }
+            if (container) {
+                container.innerHTML = `
+                    <div class="loading-indicator">
+                        <div class="spinner"></div>
+                        Loading data...
+                    </div>
+                `;
+            }
+        }
+
+        function hideLoadingIndicator() {
+            // This will be hidden when actual content is loaded
+        }
+
+        // Enhanced Error Handling
+        function showError(message, container) {
+            if (typeof container === 'string') {
+                container = document.getElementById(container);
+            }
+            if (container) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⚠️</div>
+                        <h3>Oops! Something went wrong</h3>
+                        <p>${message}</p>
+                        <button class="btn btn-primary" onclick="location.reload()">
+                            🔄 Try Again
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // Empty State Helper
+        function showEmptyState(container, icon, title, message, actionText, actionCallback) {
+            if (typeof container === 'string') {
+                container = document.getElementById(container);
+            }
+            if (container) {
+                const actionButton = actionCallback ? 
+                    `<button class="btn btn-primary" onclick="${actionCallback}">${actionText}</button>` : '';
+                
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">${icon}</div>
+                        <h3>${title}</h3>
+                        <p>${message}</p>
+                        ${actionButton}
+                    </div>
+                `;
+            }
+        }
+
+        // Enhanced Filter Functions
+        function clearFilters(type) {
+            switch(type) {
+                case 'clients':
+                    document.getElementById('nameFilter').value = '';
+                    document.getElementById('typeFilter').value = '';
+                    document.getElementById('minPrice').value = '';
+                    document.getElementById('maxPrice').value = '';
+                    filterClients();
+                    break;
+                case 'leads':
+                    document.getElementById('leadNameFilter').value = '';
+                    document.getElementById('leadStatusFilter').value = '';
+                    filterLeads();
+                    break;
+                case 'properties':
+                    document.getElementById('propertySearchFilter').value = '';
+                    document.getElementById('propertyTypeFilter').value = '';
+                    document.getElementById('propertyStatusFilter').value = '';
+                    filterProperties();
+                    break;
+            }
+        }
+
+        function exportFilteredClients() {
+            const filteredClients = getFilteredClients();
+            if (filteredClients.length === 0) {
+                alert('No clients match the current filters.');
+                return;
+            }
+            
+            const csvContent = [
+                ['Name', 'Email', 'Phone', 'Type', 'Budget Min', 'Budget Max', 'Birthday', 'Notes'].join(','),
+                ...filteredClients.map(client => [
+                    client.name,
+                    client.email,
+                    client.phone,
+                    client.type,
+                    client.budgetMin || '',
+                    client.budgetMax || '',
+                    client.birthday || '',
+                    (client.notes || '').replace(/,/g, ';')
+                ].join(','))
+            ].join('\n');
+            
+            downloadFile(csvContent, 'filtered-clients.csv', 'text/csv');
+        }
+
+        // Enhanced search with debouncing
+        let searchTimeout;
+        function debounceSearch(func, delay = 300) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(func, delay);
+        }
+
+        // Add visual feedback for search results
+        function highlightSearchTerm(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark style="background: rgba(26, 95, 95, 0.2); padding: 2px 4px; border-radius: 3px;">$1</mark>');
+        }
+
+        // Enhanced table updates with smooth animations
+        function updateTableWithAnimation(tableId, updateFunction) {
+            const table = document.getElementById(tableId);
+            if (table) {
+                table.style.opacity = '0.7';
+                table.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    updateFunction();
+                    table.style.opacity = '1';
+                    table.style.transform = 'translateY(0)';
+                }, 150);
+            }
+        }
+
+        // Update client statistics
+        function updateClientStats() {
+            const totalElement = document.getElementById('totalClients');
+            const buyerElement = document.getElementById('buyerClients');
+            const sellerElement = document.getElementById('sellerClients');
+            const tenantElement = document.getElementById('tenantClients');
+            
+            if (totalElement) {
+                const buyers = clients.filter(c => c.type === 'buyer').length;
+                const sellers = clients.filter(c => c.type === 'seller').length;
+                const tenants = clients.filter(c => c.type === 'tenant').length;
+                
+                // Animate number changes
+                animateNumber(totalElement, clients.length);
+                animateNumber(buyerElement, buyers);
+                animateNumber(sellerElement, sellers);
+                animateNumber(tenantElement, tenants);
+            }
+        }
+
+        function animateNumber(element, targetNumber) {
+            const currentNumber = parseInt(element.textContent) || 0;
+            const increment = targetNumber > currentNumber ? 1 : -1;
+            const duration = 500; // ms
+            const steps = Math.abs(targetNumber - currentNumber);
+            const stepDuration = steps > 0 ? duration / steps : 0;
+            
+            if (steps === 0) return;
+            
+            let current = currentNumber;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = current;
+                
+                if (current === targetNumber) {
+                    clearInterval(timer);
+                }
+            }, stepDuration);
+        }
+
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication first
+            if (!checkAuthentication()) {
+                return; // Will redirect to auth page
+            }
+            
+            initializePWA();
             initializeData();
+            handleShortcuts();
+            
+            // Request notification permission after a short delay
+            setTimeout(() => {
+                requestNotificationPermission();
+            }, 3000);
+            
+            // Check for reminders every 30 minutes
+            setInterval(checkForUpcomingReminders, 30 * 60 * 1000);
         });
     </script>
 </body>
 </html>
+
