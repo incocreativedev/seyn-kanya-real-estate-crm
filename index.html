@@ -784,6 +784,366 @@
             font-size: var(--text-base);
             color: #1a5f5f;
         }
+
+        /* International Phone Input Styling */
+        .phone-input-group {
+            display: flex;
+            gap: var(--space-xs);
+            align-items: stretch;
+        }
+
+        .country-select {
+            min-width: 120px;
+            padding: var(--space-sm) var(--space-xs);
+            border: 1px solid #ddd;
+            border-radius: var(--space-xs);
+            background: white;
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .country-select:focus {
+            outline: none;
+            border-color: #1a5f5f;
+            box-shadow: 0 0 0 2px rgba(26, 95, 95, 0.1);
+        }
+
+        .country-select:hover {
+            border-color: #2d7d7d;
+        }
+
+        .phone-number-input {
+            flex: 1;
+            padding: var(--space-sm);
+            border: 1px solid #ddd;
+            border-radius: var(--space-xs);
+            font-size: var(--text-sm);
+            transition: all 0.2s ease;
+        }
+
+        .phone-number-input:focus {
+            outline: none;
+            border-color: #1a5f5f;
+            box-shadow: 0 0 0 2px rgba(26, 95, 95, 0.1);
+        }
+
+        .phone-number-input:hover {
+            border-color: #2d7d7d;
+        }
+
+        /* Form Enhancements */
+        .form-hint {
+            color: #666;
+            font-size: var(--text-xs);
+            margin-top: var(--space-xs);
+            display: block;
+            line-height: var(--leading-normal);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--space-sm);
+            margin-top: var(--space-lg);
+            padding-top: var(--space-md);
+            border-top: 1px solid #eee;
+        }
+
+        .text-error {
+            color: #dc2626;
+            font-weight: 500;
+        }
+
+        .text-secondary {
+            color: #6b7280;
+            font-weight: normal;
+            font-size: var(--text-xs);
+        }
+
+        /* Enhanced form labels */
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        /* Mobile responsive for phone input */
+        @media (max-width: 768px) {
+            .phone-input-group {
+                flex-direction: column;
+            }
+            
+            .country-select {
+                min-width: auto;
+            }
+            
+            .form-actions {
+                flex-direction: column-reverse;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+        }
+
+        /* Burger Menu Styles */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .mobile-burger {
+            display: none;
+        }
+
+        .burger-button {
+            background: none;
+            border: none;
+            padding: var(--space-sm);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 32px;
+            height: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .burger-line {
+            width: 20px;
+            height: 2px;
+            background: #1a5f5f;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .burger-button.active .burger-line:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .burger-button.active .burger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-button.active .burger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-menu {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .mobile-menu-overlay.active .mobile-menu {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
+            color: white;
+        }
+
+        .mobile-menu-header h3 {
+            margin: 0;
+            font-size: var(--text-lg);
+            font-weight: 600;
+        }
+
+        .close-mobile-menu {
+            background: none;
+            border: none;
+            color: white;
+            font-size: var(--text-xl);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--space-xs);
+            transition: background-color 0.2s ease;
+        }
+
+        .close-mobile-menu:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu-content {
+            padding: var(--space-lg);
+        }
+
+        .mobile-user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+            padding: var(--space-md);
+            background: #f8f9fa;
+            border-radius: var(--space-md);
+        }
+
+        .mobile-user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--text-lg);
+        }
+
+        .mobile-user-details {
+            flex: 1;
+        }
+
+        .mobile-user-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: var(--space-xs);
+        }
+
+        .mobile-user-email {
+            font-size: var(--text-sm);
+            color: #666;
+        }
+
+        .mobile-menu-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .mobile-menu-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md);
+            background: none;
+            border: none;
+            border-radius: var(--space-md);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: var(--text-base);
+            color: #333;
+            text-align: left;
+            width: 100%;
+        }
+
+        .mobile-menu-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .mobile-menu-btn.logout-btn {
+            color: #dc3545;
+            border-top: 1px solid #eee;
+            margin-top: var(--space-md);
+            padding-top: var(--space-lg);
+        }
+
+        .mobile-menu-btn.logout-btn:hover {
+            background: #fee;
+        }
+
+        .mobile-menu-icon {
+            font-size: var(--text-lg);
+        }
+
+        /* Enhanced Tab Navigation */
+        .tabs-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tabs-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tabs {
+            display: flex;
+            min-width: max-content;
+            gap: var(--space-xs);
+            padding: var(--space-md) var(--space-lg);
+            background: #f8f9fa;
+            border-radius: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .tab {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-md);
+            min-width: 80px;
+            background: white;
+            border: none;
+            border-radius: var(--space-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            font-size: var(--text-sm);
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: #e3f2fd;
+            color: #1a5f5f;
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(26, 95, 95, 0.3);
+        }
+
+        .tab-icon {
+            font-size: var(--text-lg);
+        }
+
+        .tab-text {
+            font-size: var(--text-xs);
+            font-weight: 600;
+        }
         
         .client-detail-card {
             background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
@@ -1056,23 +1416,24 @@
             transform: translateY(-2px) scale(1.05);
         }
         
-        /* Quick Stats Cards */
+        /* Quick Stats Cards - Compact Design */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-lg);
-            margin-bottom: var(--space-2xl);
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
         }
         
         .stat-card {
             background: white;
-            border-radius: var(--space-lg);
-            padding: var(--space-2xl);
-            box-shadow: 0 8px 32px rgba(26, 95, 95, 0.08);
+            border-radius: var(--space-md);
+            padding: var(--space-md);
+            box-shadow: 0 4px 16px rgba(26, 95, 95, 0.06);
             border: 1px solid rgba(26, 95, 95, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .stat-card::before {
@@ -1091,32 +1452,32 @@
         }
         
         .stat-card .stat-icon {
-            width: var(--space-2xl);
-            height: var(--space-2xl);
+            width: var(--space-lg);
+            height: var(--space-lg);
             background: linear-gradient(135deg, #1a5f5f 0%, #2d7d7d 100%);
-            border-radius: var(--space-md);
-            display: flex;
+            border-radius: var(--space-sm);
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: var(--text-xl);
+            font-size: var(--text-sm);
             color: white;
-            margin-bottom: var(--space-lg);
+            margin: 0 auto var(--space-sm);
         }
         
         .stat-card .stat-number {
-            font-size: var(--text-4xl);
+            font-size: var(--text-2xl);
             font-weight: 700;
             color: #1a5f5f;
-            margin-bottom: var(--space-sm);
+            margin-bottom: var(--space-xs);
             line-height: var(--leading-tight);
         }
         
         .stat-card .stat-label {
-            font-size: var(--text-sm);
+            font-size: var(--text-xs);
             color: #6c757d;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: var(--tracking-wider);
+            letter-spacing: var(--tracking-wide);
         }
         
         /* Loading States */
@@ -1175,7 +1536,30 @@
         
         @media (max-width: 768px) {
             .container {
-                padding: var(--space-lg);
+                padding: var(--space-md);
+            }
+            
+            /* Show burger menu, hide desktop actions */
+            .desktop-actions {
+                display: none;
+            }
+            
+            .mobile-burger {
+                display: block;
+            }
+            
+            /* Header adjustments */
+            .header {
+                padding: var(--space-md);
+            }
+            
+            .header-title {
+                font-size: var(--text-lg);
+            }
+            
+            .logo-text {
+                font-size: var(--text-xs);
+                line-height: 1.1;
             }
             
             .form-row, .form-row-3 {
@@ -1188,59 +1572,120 @@
             
             .filters {
                 flex-direction: column;
-                padding: var(--space-lg);
-                gap: var(--space-md);
+                padding: var(--space-md);
+                gap: var(--space-sm);
             }
             
-            .header {
-                flex-direction: column;
-                gap: var(--space-md);
-                padding: var(--space-lg);
-            }
-            
+            /* Tab improvements */
             .tabs {
-                flex-wrap: wrap;
-                padding: var(--space-sm) var(--space-sm);
+                padding: var(--space-sm);
+                gap: var(--space-xs);
             }
             
             .tab {
-                padding: var(--space-md) var(--space-lg);
-                margin: var(--space-xs);
+                min-width: 60px;
+                padding: var(--space-sm);
+            }
+            
+            .tab-text {
+                font-size: 10px;
             }
             
             .tab-content {
-                padding: var(--space-lg);
+                padding: var(--space-md);
             }
             
-            .fab {
-                bottom: var(--space-lg);
-                right: var(--space-lg);
-                width: 56px;
-                height: 56px;
-                font-size: var(--text-xl);
-            }
-            
+            /* Compact stats for mobile */
             .stats-grid {
-                grid-template-columns: 1fr;
-                gap: var(--space-md);
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-xs);
+                margin-bottom: var(--space-md);
             }
             
+            .stat-card {
+                padding: var(--space-sm);
+            }
+            
+            .stat-card .stat-icon {
+                width: var(--space-md);
+                height: var(--space-md);
+                font-size: 10px;
+                margin-bottom: var(--space-xs);
+            }
+            
+            .stat-card .stat-number {
+                font-size: var(--text-lg);
+                margin-bottom: 2px;
+            }
+            
+            .stat-card .stat-label {
+                font-size: 10px;
+            }
+            
+            /* Form improvements */
             .search-bar {
                 min-width: 100%;
+                margin-bottom: var(--space-md);
             }
             
+            .filter-group {
+                width: 100%;
+            }
+            
+            /* Card spacing */
             .property-card, .client-detail-card {
                 margin-left: calc(-1 * var(--space-sm));
                 margin-right: calc(-1 * var(--space-sm));
+                border-radius: var(--space-md);
             }
             
+            /* Button improvements */
             .btn {
                 margin-bottom: var(--space-sm);
+                font-size: var(--text-sm);
             }
             
             .btn-small {
                 padding: var(--space-xs) var(--space-sm);
                 margin-bottom: var(--space-xs);
+                font-size: var(--text-xs);
+            }
+            
+            /* FAB positioning */
+            .fab {
+                bottom: var(--space-lg);
+                right: var(--space-lg);
+                width: 48px;
+                height: 48px;
+                font-size: var(--text-lg);
+            }
+            
+            /* Modal improvements */
+            .modal-content {
+                margin: var(--space-md);
+                max-height: calc(100vh - var(--space-2xl));
+                overflow-y: auto;
+            }
+            
+            /* Table responsiveness */
+            .data-table {
+                font-size: var(--text-sm);
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: var(--space-xs);
+            }
+        }
+        
+        /* Tablet responsive */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .container {
+                padding: var(--space-lg);
             }
         }
     </style>
@@ -1251,16 +1696,13 @@
             <div class="logo">
                 <div class="logo-icon"></div>
                 <div class="logo-text">TYSON<br>PROPERTIES</div>
-            </div>
-            <h1 class="header-title">Real Estate CRM</h1>
         </div>
-        <div class="team-profiles">
-            <div class="profile" id="userProfile" style="display: none;">
-                <div class="profile-pic" id="userInitials"></div>
-                <div class="profile-name" id="userName"></div>
+            <h1 class="header-title">Real Estate CRM</h1>
             </div>
-            <div style="margin-left: 20px; display: flex; gap: 10px; align-items: center;">
-                <button class="btn btn-info btn-small" onclick="exportData()">📊 Export Data</button>
+        <div class="header-actions">
+            <!-- Desktop Actions -->
+            <div class="desktop-actions">
+                <button class="btn btn-info btn-small" onclick="exportData()">📊 Export</button>
                 <div class="dropdown" style="position: relative;">
                     <button class="btn btn-success btn-small" onclick="toggleUserMenu()" id="userMenuButton">
                         👤 <span id="userMenuName">User</span> ▼
@@ -1279,19 +1721,88 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Mobile Burger Menu -->
+            <div class="mobile-burger">
+                <button class="burger-button" onclick="toggleBurgerMenu()" id="burgerButton">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Overlay -->
+        <div id="mobileMenuOverlay" class="mobile-menu-overlay">
+            <div class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <h3>Menu</h3>
+                    <button class="close-mobile-menu" onclick="closeBurgerMenu()">✕</button>
+                </div>
+                <div class="mobile-menu-content">
+                    <div class="mobile-user-info">
+                        <div class="mobile-user-avatar" id="mobileUserInitials"></div>
+                        <div class="mobile-user-details">
+                            <div class="mobile-user-name" id="mobileUserName">User</div>
+                            <div class="mobile-user-email" id="mobileUserEmail"></div>
+                        </div>
+                    </div>
+                    <div class="mobile-menu-actions">
+                        <button class="mobile-menu-btn" onclick="exportData(); closeBurgerMenu();">
+                            <span class="mobile-menu-icon">📊</span>
+                            Export Data
+                        </button>
+                        <button class="mobile-menu-btn" onclick="editProfile(); closeBurgerMenu();">
+                            <span class="mobile-menu-icon">✏️</span>
+                            Edit Profile
+                        </button>
+                        <button class="mobile-menu-btn" onclick="showChangePassword(); closeBurgerMenu();">
+                            <span class="mobile-menu-icon">🔒</span>
+                            Change Password
+                        </button>
+                        <button class="mobile-menu-btn logout-btn" onclick="logout();">
+                            <span class="mobile-menu-icon">🚪</span>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="container">
         <div class="tab-container">
+            <div class="tabs-wrapper">
             <div class="tabs">
-                <button class="tab active" onclick="showTab('contacts')">👥 All Clients</button>
-                <button class="tab" onclick="showTab('leads')">🎯 Potential Leads</button>
-                <button class="tab" onclick="showTab('properties')">🏠 Properties</button>
-                <button class="tab" onclick="showTab('reminders')">⏰ Reminders</button>
-                <button class="tab" onclick="showTab('comments')">📝 Comments</button>
-                <button class="tab" onclick="showTab('import')">📥 Import Listings</button>
-                <button class="tab" onclick="showTab('chat')">🤖 AI Assistant</button>
+                    <button class="tab active" onclick="showTab('contacts')">
+                        <span class="tab-icon">👥</span>
+                        <span class="tab-text">Clients</span>
+                    </button>
+                    <button class="tab" onclick="showTab('leads')">
+                        <span class="tab-icon">🎯</span>
+                        <span class="tab-text">Leads</span>
+                    </button>
+                    <button class="tab" onclick="showTab('properties')">
+                        <span class="tab-icon">🏠</span>
+                        <span class="tab-text">Properties</span>
+                    </button>
+                    <button class="tab" onclick="showTab('reminders')">
+                        <span class="tab-icon">⏰</span>
+                        <span class="tab-text">Reminders</span>
+                    </button>
+                    <button class="tab" onclick="showTab('comments')">
+                        <span class="tab-icon">📝</span>
+                        <span class="tab-text">Comments</span>
+                    </button>
+                    <button class="tab" onclick="showTab('import')">
+                        <span class="tab-icon">📥</span>
+                        <span class="tab-text">Import</span>
+                    </button>
+                    <button class="tab" onclick="showTab('chat')">
+                        <span class="tab-icon">🤖</span>
+                        <span class="tab-text">AI Chat</span>
+                    </button>
+                </div>
             </div>
 
             <!-- All Clients Tab -->
@@ -1582,54 +2093,98 @@
             <form onsubmit="addClient(event)">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Full Name:</label>
-                        <input type="text" name="name" required>
+                        <label>Full Name: <span class="text-error">*</span></label>
+                        <input type="text" name="name" required placeholder="Enter client's full name">
                     </div>
                     <div class="form-group">
-                        <label>Contact Number:</label>
-                        <input type="tel" name="phone" required>
+                        <label>Email Address: <span class="text-error">*</span></label>
+                        <input type="email" name="email" required placeholder="client@example.com">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Email Address:</label>
-                        <input type="email" name="email" required>
+                        <label>Contact Number: <span class="text-secondary">(Optional)</span></label>
+                        <div class="phone-input-group">
+                            <select name="countryCode" class="country-select" title="Country Code">
+                                <option value="+27" data-country="ZA">🇿🇦 +27</option>
+                                <option value="+1" data-country="US">🇺🇸 +1</option>
+                                <option value="+44" data-country="GB">🇬🇧 +44</option>
+                                <option value="+33" data-country="FR">🇫🇷 +33</option>
+                                <option value="+49" data-country="DE">🇩🇪 +49</option>
+                                <option value="+39" data-country="IT">🇮🇹 +39</option>
+                                <option value="+34" data-country="ES">🇪🇸 +34</option>
+                                <option value="+31" data-country="NL">🇳🇱 +31</option>
+                                <option value="+61" data-country="AU">🇦🇺 +61</option>
+                                <option value="+86" data-country="CN">🇨🇳 +86</option>
+                                <option value="+91" data-country="IN">🇮🇳 +91</option>
+                                <option value="+81" data-country="JP">🇯🇵 +81</option>
+                                <option value="+82" data-country="KR">🇰🇷 +82</option>
+                                <option value="+55" data-country="BR">🇧🇷 +55</option>
+                                <option value="+52" data-country="MX">🇲🇽 +52</option>
+                                <option value="+7" data-country="RU">🇷🇺 +7</option>
+                                <option value="+971" data-country="AE">🇦🇪 +971</option>
+                                <option value="+966" data-country="SA">🇸🇦 +966</option>
+                                <option value="+65" data-country="SG">🇸🇬 +65</option>
+                                <option value="+60" data-country="MY">🇲🇾 +60</option>
+                            </select>
+                            <input type="tel" name="phone" placeholder="Enter phone number or N/A" class="phone-number-input">
                     </div>
+                        <small class="form-hint">Include area code without country prefix. Enter "N/A" if not available.</small>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Client Type:</label>
+                        <label>Client Type: <span class="text-error">*</span></label>
                         <select name="type" required>
                             <option value="">Select Type</option>
-                            <option value="buyer">Buyer</option>
-                            <option value="seller">Seller</option>
-                            <option value="tenant">Tenant</option>
+                            <option value="Buyer">Buyer</option>
+                            <option value="Seller">Seller</option>
+                            <option value="Investor">Investor</option>
+                            <option value="Renter">Renter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Currency:</label>
+                        <select name="currency">
+                            <option value="ZAR">ZAR (South African Rand)</option>
+                            <option value="USD">USD (US Dollar)</option>
+                            <option value="EUR">EUR (Euro)</option>
+                            <option value="GBP">GBP (British Pound)</option>
+                            <option value="AUD">AUD (Australian Dollar)</option>
+                            <option value="CAD">CAD (Canadian Dollar)</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Birthday:</label>
-                        <input type="date" name="birthday">
+                        <label>Birthday: <span class="text-secondary">(Optional)</span></label>
+                        <input type="date" name="birthday" placeholder="Select date or leave empty">
                     </div>
                     <div class="form-group">
-                        <label>Next Reminder Date:</label>
-                        <input type="date" name="reminderDate">
+                        <label>Next Reminder Date: <span class="text-secondary">(Optional)</span></label>
+                        <input type="date" name="reminderDate" placeholder="Set reminder or leave empty">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Budget Min (ZAR):</label>
-                        <input type="number" name="budgetMin" min="5000" max="25000000" placeholder="5000">
+                        <label>Budget Min: <span class="text-secondary">(Optional)</span></label>
+                        <input type="text" name="budgetMin" placeholder="Enter amount or N/A">
+                        <small class="form-hint">Format: 500000 or 500K or N/A</small>
                     </div>
                     <div class="form-group">
-                        <label>Budget Max (ZAR):</label>
-                        <input type="number" name="budgetMax" min="5000" max="25000000" placeholder="25000000">
+                        <label>Budget Max: <span class="text-secondary">(Optional)</span></label>
+                        <input type="text" name="budgetMax" placeholder="Enter amount or N/A">
+                        <small class="form-hint">Format: 2000000 or 2M or N/A</small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Additional Notes:</label>
-                    <textarea name="notes" rows="3" placeholder="Any additional information about the client..."></textarea>
+                    <label>Additional Notes: <span class="text-secondary">(Optional)</span></label>
+                    <textarea name="notes" rows="3" placeholder="Any additional information about the client, or enter N/A..."></textarea>
                 </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('addClientModal')">Cancel</button>
                 <button type="submit" class="btn btn-primary">Add Client</button>
+                </div>
             </form>
         </div>
     </div>
@@ -1642,49 +2197,103 @@
             <form onsubmit="addLead(event)">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Full Name:</label>
-                        <input type="text" name="leadName" required>
+                        <label>Full Name: <span class="text-error">*</span></label>
+                        <input type="text" name="leadName" required placeholder="Enter lead's full name">
                     </div>
                     <div class="form-group">
-                        <label>Contact Number:</label>
-                        <input type="tel" name="leadPhone" required>
+                        <label>Email: <span class="text-secondary">(Optional)</span></label>
+                        <input type="email" name="leadEmail" placeholder="lead@example.com or N/A">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Email (Optional):</label>
-                        <input type="email" name="leadEmail">
+                        <label>Contact Number: <span class="text-secondary">(Optional)</span></label>
+                        <div class="phone-input-group">
+                            <select name="leadCountryCode" class="country-select" title="Country Code">
+                                <option value="+27" data-country="ZA">🇿🇦 +27</option>
+                                <option value="+1" data-country="US">🇺🇸 +1</option>
+                                <option value="+44" data-country="GB">🇬🇧 +44</option>
+                                <option value="+33" data-country="FR">🇫🇷 +33</option>
+                                <option value="+49" data-country="DE">🇩🇪 +49</option>
+                                <option value="+39" data-country="IT">🇮🇹 +39</option>
+                                <option value="+34" data-country="ES">🇪🇸 +34</option>
+                                <option value="+31" data-country="NL">🇳🇱 +31</option>
+                                <option value="+61" data-country="AU">🇦🇺 +61</option>
+                                <option value="+86" data-country="CN">🇨🇳 +86</option>
+                                <option value="+91" data-country="IN">🇮🇳 +91</option>
+                                <option value="+81" data-country="JP">🇯🇵 +81</option>
+                                <option value="+82" data-country="KR">🇰🇷 +82</option>
+                                <option value="+55" data-country="BR">🇧🇷 +55</option>
+                                <option value="+52" data-country="MX">🇲🇽 +52</option>
+                                <option value="+7" data-country="RU">🇷🇺 +7</option>
+                                <option value="+971" data-country="AE">🇦🇪 +971</option>
+                                <option value="+966" data-country="SA">🇸🇦 +966</option>
+                                <option value="+65" data-country="SG">🇸🇬 +65</option>
+                                <option value="+60" data-country="MY">🇲🇾 +60</option>
+                            </select>
+                            <input type="tel" name="leadPhone" placeholder="Enter phone number or N/A" class="phone-number-input">
                     </div>
+                        <small class="form-hint">Include area code without country prefix. Enter "N/A" if not available.</small>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Interest:</label>
+                        <label>Interest: <span class="text-error">*</span></label>
                         <select name="leadInterest" required>
                             <option value="">Select Interest</option>
                             <option value="buying">Looking to Buy</option>
                             <option value="selling">Looking to Sell</option>
                             <option value="renting">Looking to Rent</option>
+                            <option value="investing">Investment Opportunity</option>
+                            <option value="consultation">Consultation</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group">
-                        <label>Follow-up Date:</label>
-                        <input type="date" name="followUpDate" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status:</label>
+                        <label>Status: <span class="text-error">*</span></label>
                         <select name="leadStatus" required>
                             <option value="new">New Lead</option>
                             <option value="contacted">Contacted</option>
                             <option value="qualified">Qualified</option>
                             <option value="converted">Converted</option>
+                            <option value="cold">Cold Lead</option>
                         </select>
                     </div>
                 </div>
+                <div class="form-row">
                 <div class="form-group">
-                    <label>Notes:</label>
-                    <textarea name="leadNotes" rows="3" placeholder="Lead source, preferences, etc..."></textarea>
+                        <label>Follow-up Date: <span class="text-secondary">(Optional)</span></label>
+                        <input type="date" name="followUpDate" placeholder="Set follow-up date or leave empty">
                 </div>
+                    <div class="form-group">
+                        <label>Budget Range: <span class="text-secondary">(Optional)</span></label>
+                        <input type="text" name="leadBudget" placeholder="e.g., 500K-1M or N/A">
+                        <small class="form-hint">Approximate budget if known</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Lead Source: <span class="text-secondary">(Optional)</span></label>
+                    <select name="leadSource">
+                        <option value="">Select Source</option>
+                        <option value="website">Website</option>
+                        <option value="referral">Referral</option>
+                        <option value="social-media">Social Media</option>
+                        <option value="google-ads">Google Ads</option>
+                        <option value="facebook-ads">Facebook Ads</option>
+                        <option value="walk-in">Walk-in</option>
+                        <option value="phone-call">Phone Call</option>
+                        <option value="email">Email Inquiry</option>
+                        <option value="property-portal">Property Portal</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notes: <span class="text-secondary">(Optional)</span></label>
+                    <textarea name="leadNotes" rows="3" placeholder="Lead preferences, requirements, or enter N/A..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('addLeadModal')">Cancel</button>
                 <button type="submit" class="btn btn-primary">Add Lead</button>
+                </div>
             </form>
         </div>
     </div>
@@ -2092,6 +2701,21 @@
             userInitials.textContent = initials;
             userName.textContent = firstName;
             userProfile.style.display = 'block';
+            
+            // Update mobile user info
+            const mobileUserInitials = document.getElementById('mobileUserInitials');
+            const mobileUserName = document.getElementById('mobileUserName');
+            const mobileUserEmail = document.getElementById('mobileUserEmail');
+            
+            if (mobileUserInitials) {
+                mobileUserInitials.textContent = initials;
+            }
+            if (mobileUserName) {
+                mobileUserName.textContent = currentUser.fullName;
+            }
+            if (mobileUserEmail) {
+                mobileUserEmail.textContent = currentUser.email;
+            }
         }
         
         function clearAuthData() {
@@ -2134,13 +2758,80 @@
                 logout();
             }
         }
-        
-        // Close dropdown when clicking outside
+
+        // Burger Menu Functions
+        function toggleBurgerMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const burgerButton = document.getElementById('burgerButton');
+            
+            if (overlay.classList.contains('active')) {
+                closeBurgerMenu();
+            } else {
+                openBurgerMenu();
+            }
+        }
+
+        function openBurgerMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const burgerButton = document.getElementById('burgerButton');
+            
+            overlay.classList.add('active');
+            burgerButton.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+            
+            // Update mobile user info
+            updateMobileUserInfo();
+        }
+
+        function closeBurgerMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const burgerButton = document.getElementById('burgerButton');
+            
+            overlay.classList.remove('active');
+            burgerButton.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scroll
+        }
+
+        function updateMobileUserInfo() {
+            const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (storedUser) {
+                const mobileUserInitials = document.getElementById('mobileUserInitials');
+                const mobileUserName = document.getElementById('mobileUserName');
+                const mobileUserEmail = document.getElementById('mobileUserEmail');
+                
+                const fullName = storedUser.fullName || storedUser.full_name || 'User';
+                const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                if (mobileUserInitials) {
+                    mobileUserInitials.textContent = initials;
+                }
+                if (mobileUserName) {
+                    mobileUserName.textContent = fullName;
+                }
+                if (mobileUserEmail) {
+                    mobileUserEmail.textContent = storedUser.email || '';
+                }
+            }
+        }
+
+        // Close burger menu when clicking overlay
         document.addEventListener('click', function(event) {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const burgerButton = document.getElementById('burgerButton');
+            
+            // Close mobile menu if clicking on overlay (not menu content)
+            if (overlay && overlay.classList.contains('active') && 
+                event.target === overlay && !mobileMenu.contains(event.target)) {
+                closeBurgerMenu();
+            }
+            
+            // Close dropdown when clicking outside
             const dropdown = document.getElementById('userDropdown');
             const menuButton = document.getElementById('userMenuButton');
             
-            if (!menuButton.contains(event.target) && !dropdown.contains(event.target)) {
+            if (menuButton && dropdown && 
+                !menuButton.contains(event.target) && !dropdown.contains(event.target)) {
                 dropdown.style.display = 'none';
             }
         });
@@ -2481,6 +3172,57 @@
             return date.toLocaleDateString('en-ZA');
         }
 
+        // Helper function to parse budget values like "500K", "2M", "1.5M", etc.
+        function parseBudgetValue(value) {
+            if (!value || value.toLowerCase() === 'n/a') return 0;
+            
+            const cleanValue = value.toString().trim().toUpperCase();
+            
+            // Remove currency symbols and spaces
+            const numericValue = cleanValue.replace(/[R$€£¥\s,]/g, '');
+            
+            // Handle K (thousands) and M (millions)
+            if (numericValue.endsWith('K')) {
+                return parseFloat(numericValue.slice(0, -1)) * 1000;
+            } else if (numericValue.endsWith('M')) {
+                return parseFloat(numericValue.slice(0, -1)) * 1000000;
+            } else {
+                // Direct numeric value
+                return parseFloat(numericValue) || 0;
+            }
+        }
+
+        // Helper function to format phone numbers for display
+        function formatPhoneForDisplay(phone, countryCode) {
+            if (!phone || phone === 'N/A' || phone.toLowerCase() === 'n/a') {
+                return 'Not provided';
+            }
+            
+            // If phone already includes country code, use it as is
+            if (phone.startsWith('+')) {
+                return phone;
+            }
+            
+            // Add country code if missing
+            if (countryCode) {
+                return `${countryCode} ${phone}`;
+            }
+            
+            return phone;
+        }
+
+        // Helper function to get country flag from country code
+        function getCountryFlag(countryCode) {
+            const flagMap = {
+                '+27': '🇿🇦', '+1': '🇺🇸', '+44': '🇬🇧', '+33': '🇫🇷',
+                '+49': '🇩🇪', '+39': '🇮🇹', '+34': '🇪🇸', '+31': '🇳🇱',
+                '+61': '🇦🇺', '+86': '🇨🇳', '+91': '🇮🇳', '+81': '🇯🇵',
+                '+82': '🇰🇷', '+55': '🇧🇷', '+52': '🇲🇽', '+7': '🇷🇺',
+                '+971': '🇦🇪', '+966': '🇸🇦', '+65': '🇸🇬', '+60': '🇲🇾'
+            };
+            return flagMap[countryCode] || '🌍';
+        }
+
         // Client functions
         async function addClient(event) {
             event.preventDefault();
@@ -2488,14 +3230,14 @@
             
             // Basic validation
             const name = formData.get('name').trim();
-            const phone = formData.get('phone').trim();
+            const countryCode = formData.get('countryCode') || '+27';
+            const phoneNumber = formData.get('phone').trim();
             const email = formData.get('email').trim();
-            const budgetMin = parseInt(formData.get('budgetMin')) || 0;
-            const budgetMax = parseInt(formData.get('budgetMax')) || 0;
+            const type = formData.get('type');
             
             // Validate required fields
-            if (!name || !phone || !email) {
-                alert('Please fill in all required fields (Name, Phone, Email)');
+            if (!name || !email || !type) {
+                alert('Please fill in all required fields (Name, Email, Type)');
                 return;
             }
             
@@ -2506,29 +3248,55 @@
                 return;
             }
             
-            // Validate phone format (basic South African format)
-            const phoneRegex = /^(\+27|0)[0-9]{9}$/;
-            if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
-                alert('Please enter a valid South African phone number (e.g., +27 82 123 4567 or 082 123 4567)');
-                return;
+            // Handle phone number formatting
+            let fullPhoneNumber = '';
+            if (phoneNumber && phoneNumber.toLowerCase() !== 'n/a' && phoneNumber.trim() !== '') {
+                // Remove any existing country code or special characters
+                const cleanPhone = phoneNumber.replace(/[\s\-\(\)]/g, '');
+                
+                // Basic validation - should be numbers only after cleaning
+                if (!/^\d+$/.test(cleanPhone)) {
+                    alert('Phone number should contain only digits, spaces, and dashes');
+                    return;
+                }
+                
+                // Format with country code
+                fullPhoneNumber = countryCode + cleanPhone;
+            }
+            
+            // Handle budget values - support various formats
+            let budgetMin = 0;
+            let budgetMax = 0;
+            
+            const budgetMinStr = formData.get('budgetMin')?.trim();
+            const budgetMaxStr = formData.get('budgetMax')?.trim();
+            
+            if (budgetMinStr && budgetMinStr.toLowerCase() !== 'n/a') {
+                budgetMin = parseBudgetValue(budgetMinStr);
+            }
+            
+            if (budgetMaxStr && budgetMaxStr.toLowerCase() !== 'n/a') {
+                budgetMax = parseBudgetValue(budgetMaxStr);
             }
             
             // Validate budget range
-            if (budgetMax > 0 && budgetMin > budgetMax) {
+            if (budgetMax > 0 && budgetMin > 0 && budgetMin > budgetMax) {
                 alert('Budget minimum cannot be greater than budget maximum');
                 return;
             }
             
             const clientData = {
                 name: name,
-                phone: phone,
+                phone: fullPhoneNumber || null,
+                countryCode: countryCode,
                 email: email,
-                type: formData.get('type'),
-                birthday: formData.get('birthday'),
+                type: type,
+                currency: formData.get('currency') || 'ZAR',
+                birthday: formData.get('birthday') || null,
                 budgetMin: budgetMin,
                 budgetMax: budgetMax,
-                reminderDate: formData.get('reminderDate'),
-                notes: formData.get('notes')
+                reminderDate: formData.get('reminderDate') || null,
+                notes: formData.get('notes')?.trim() || null
             };
             
             try {
@@ -2904,14 +3672,54 @@
             event.preventDefault();
             const formData = new FormData(event.target);
             
+            // Basic validation
+            const name = formData.get('leadName')?.trim();
+            const interest = formData.get('leadInterest');
+            const status = formData.get('leadStatus');
+            
+            // Validate required fields
+            if (!name || !interest || !status) {
+                alert('Please fill in all required fields (Name, Interest, Status)');
+                return;
+            }
+            
+            // Handle phone number formatting
+            const countryCode = formData.get('leadCountryCode') || '+27';
+            const phoneNumber = formData.get('leadPhone')?.trim();
+            let fullPhoneNumber = '';
+            
+            if (phoneNumber && phoneNumber.toLowerCase() !== 'n/a' && phoneNumber.trim() !== '') {
+                const cleanPhone = phoneNumber.replace(/[\s\-\(\)]/g, '');
+                
+                if (!/^\d+$/.test(cleanPhone)) {
+                    alert('Phone number should contain only digits, spaces, and dashes');
+                    return;
+                }
+                
+                fullPhoneNumber = countryCode + cleanPhone;
+            }
+            
+            // Handle email validation (optional)
+            const email = formData.get('leadEmail')?.trim();
+            if (email && email.toLowerCase() !== 'n/a' && email !== '') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address or leave empty');
+                    return;
+                }
+            }
+            
             const leadData = {
-                name: formData.get('leadName'),
-                phone: formData.get('leadPhone'),
-                email: formData.get('leadEmail'),
-                interest: formData.get('leadInterest'),
-                followUpDate: formData.get('followUpDate'),
-                status: formData.get('leadStatus'),
-                notes: formData.get('leadNotes')
+                name: name,
+                phone: fullPhoneNumber || null,
+                countryCode: countryCode,
+                email: email || null,
+                interest: interest,
+                followUpDate: formData.get('followUpDate') || null,
+                status: status,
+                budget: formData.get('leadBudget')?.trim() || null,
+                source: formData.get('leadSource') || null,
+                notes: formData.get('leadNotes')?.trim() || null
             };
             
             try {
